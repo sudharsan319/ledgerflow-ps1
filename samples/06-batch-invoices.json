@@ -1,0 +1,44 @@
+{
+  "invoices": [
+    {
+      "invoice_number": "BATCH-ACME-01",
+      "vendor_name": "Acme Cloud Services",
+      "vendor_id": "vendor-acme",
+      "po_number": "PO-2026-001",
+      "invoice_date": "2026-11-09",
+      "due_date": "2026-12-09",
+      "currency": "USD",
+      "subtotal": "650.00",
+      "tax": "0.00",
+      "total": "650.00",
+      "line_items": [
+        {
+          "description": "Cloud services",
+          "quantity": "6.50",
+          "unit_price": "100.00",
+          "amount": "650.00"
+        }
+      ]
+    },
+    {
+      "invoice_number": "BATCH-NS-01",
+      "vendor_name": "Northstar Office Supply",
+      "vendor_id": "vendor-northstar",
+      "po_number": "PO-2026-002",
+      "invoice_date": "2026-11-09",
+      "due_date": "2026-12-09",
+      "currency": "USD",
+      "subtotal": "1000.00",
+      "tax": "0.00",
+      "total": "1000.00",
+      "line_items": [
+        {
+          "description": "Office equipment",
+          "quantity": "0.2",
+          "unit_price": "5000.00",
+          "amount": "1000.00"
+        }
+      ]
+    }
+  ]
+}

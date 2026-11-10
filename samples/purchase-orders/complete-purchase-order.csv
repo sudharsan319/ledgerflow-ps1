@@ -1,0 +1,2 @@
+po_number,vendor_name,vendor_id,po_date,currency,subtotal,tax,total,approval_status,status,approved_by,line_description,quantity,unit_price,line_amount
+PO-UPLOAD-1001,Sample Stationery Ltd,,2026-11-09,USD,1000.00,100.00,1100.00,approved,open,Sample purchasing manager,Office supplies,10,100.00,1000.00

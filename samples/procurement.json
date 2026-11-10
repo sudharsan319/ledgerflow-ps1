@@ -1,0 +1,55 @@
+{
+  "vendors": [
+    {
+      "id": "vendor-acme",
+      "name": "Acme Cloud Services",
+      "aliases": [
+        "Acme Cloud",
+        "Acme Cloud Services Ltd"
+      ],
+      "approved": true
+    },
+    {
+      "id": "vendor-northstar",
+      "name": "Northstar Office Supply",
+      "aliases": [
+        "Northstar"
+      ],
+      "approved": true
+    }
+  ],
+  "purchase_orders": [
+    {
+      "po_number": "PO-2026-001",
+      "vendor_id": "vendor-acme",
+      "currency": "USD",
+      "total": "12000.00",
+      "status": "open",
+      "description": "Cloud services annual agreement",
+      "line_items": [
+        {
+          "description": "Cloud services",
+          "quantity": "120",
+          "unit_price": "100",
+          "amount": "12000"
+        }
+      ]
+    },
+    {
+      "po_number": "PO-2026-002",
+      "vendor_id": "vendor-northstar",
+      "currency": "USD",
+      "total": "5000.00",
+      "status": "open",
+      "description": "Office equipment"
+    },
+    {
+      "po_number": "PO-2026-003",
+      "vendor_id": "vendor-northstar",
+      "currency": "USD",
+      "total": "7500.00",
+      "status": "open",
+      "description": "Office supplies"
+    }
+  ]
+}

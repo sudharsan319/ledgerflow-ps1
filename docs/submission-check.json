@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "model_calls": 0,
+  "isolated_databases": true,
+  "results": {
+    "pdf_happy_path": {
+      "decisions": [
+        "approved"
+      ],
+      "checks": [
+        []
+      ]
+    },
+    "cross_format_duplicate": {
+      "decisions": [
+        "rejected"
+      ],
+      "checks": [
+        [
+          "duplicate"
+        ]
+      ]
+    },
+    "split_invoices": {
+      "decisions": [
+        "approved",
+        "needs_review"
+      ],
+      "checks": [
+        [],
+        [
+          "po_balance",
+          "po_quantity_1"
+        ]
+      ]
+    },
+    "ambiguous_po": {
+      "decisions": [
+        "needs_review"
+      ],
+      "checks": [
+        [
+          "po_ambiguous"
+        ]
+      ]
+    },
+    "missing_identity_and_wrong_total": {
+      "decisions": [
+        "needs_review"
+      ],
+      "checks": [
+        [
+          "required_fields",
+          "arithmetic",
+          "recomputed_total"
+        ]
+      ]
+    },
+    "csv_batch": {
+      "decisions": [
+        "approved",
+        "approved"
+      ],
+      "checks": [
+        [],
+        []
+      ]
+    },
+    "scanned_input": {
+      "decisions": [
+        "needs_review"
+      ],
+      "checks": [
+        [
+          "required_fields",
+          "extraction_confidence",
+          "extraction_evidence",
+          "vendor_match",
+          "po_currency"
+        ]
+      ]
+    },
+    "verified_scan_correction": {
+      "decisions": [
+        "approved"
+      ],
+      "checks": [
+        []
+      ]
+    },
+    "scenario_happy_path": {
+      "decisions": [
+        "approved"
+      ],
+      "checks": [
+        []
+      ]
+    },
+    "scenario_duplicate": {
+      "decisions": [
+        "approved",
+        "rejected"
+      ],
+      "checks": [
+        [],
+        [
+          "duplicate"
+        ]
+      ]
+    },
+    "scenario_split_overage": {
+      "decisions": [
+        "approved",
+        "needs_review"
+      ],
+      "checks": [
+        [],
+        [
+          "po_balance",
+          "po_quantity_1"
+        ]
+      ]
+    },
+    "scenario_ambiguous_po": {
+      "decisions": [
+        "needs_review"
+      ],
+      "checks": [
+        [
+          "po_ambiguous"
+        ]
+      ]
+    },
+    "scenario_missing_fields": {
+      "decisions": [
+        "needs_review"
+      ],
+      "checks": [
+        [
+          "required_fields",
+          "arithmetic",
+          "recomputed_total"
+        ]
+      ]
+    }
+  }
+}

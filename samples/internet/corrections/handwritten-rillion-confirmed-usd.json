@@ -1,0 +1,26 @@
+{
+  "invoice_number": "0001",
+  "vendor_name": "My company",
+  "vendor_id": null,
+  "po_number": null,
+  "invoice_date": "2026-02-20",
+  "due_date": "2026-03-07",
+  "currency": "USD",
+  "subtotal": "1400.00",
+  "tax": "70.00",
+  "total": "1470.00",
+  "line_items": [
+    {
+      "description": "Coffee",
+      "quantity": "50",
+      "unit_price": "10.00",
+      "amount": "500.00"
+    },
+    {
+      "description": "Cups",
+      "quantity": "100",
+      "unit_price": "9.00",
+      "amount": "900.00"
+    }
+  ]
+}

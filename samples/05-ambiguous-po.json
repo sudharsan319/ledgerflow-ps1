@@ -1,0 +1,20 @@
+{
+  "invoice_number": "NS-AMBIGUOUS-01",
+  "vendor_name": "Northstar Office Supply",
+  "vendor_id": "vendor-northstar",
+  "po_number": null,
+  "invoice_date": "2026-11-09",
+  "due_date": "2026-12-09",
+  "currency": "USD",
+  "subtotal": "750.00",
+  "tax": "75.00",
+  "total": "825.00",
+  "line_items": [
+    {
+      "description": "Office supplies",
+      "quantity": "0.1",
+      "unit_price": "7500.00",
+      "amount": "750.00"
+    }
+  ]
+}

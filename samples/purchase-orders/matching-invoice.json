@@ -1,0 +1,18 @@
+{
+  "invoice_number": "INV-PO-UPLOAD-1001",
+  "vendor_name": "Sample Stationery Ltd",
+  "po_number": "PO-UPLOAD-1001",
+  "invoice_date": "2026-11-09",
+  "currency": "USD",
+  "subtotal": "500.00",
+  "tax": "50.00",
+  "total": "550.00",
+  "line_items": [
+    {
+      "description": "Office supplies",
+      "quantity": "5",
+      "unit_price": "100.00",
+      "amount": "500.00"
+    }
+  ]
+}

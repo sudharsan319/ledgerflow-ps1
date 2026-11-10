@@ -1,0 +1,20 @@
+{
+  "invoice_number": "ACME-2026-1109",
+  "vendor_name": "Acme Cloud Services",
+  "vendor_id": "vendor-acme",
+  "po_number": "PO-2026-001",
+  "invoice_date": "2026-11-09",
+  "due_date": "2026-12-09",
+  "currency": "USD",
+  "subtotal": "1000.00",
+  "tax": "100.00",
+  "total": "1100.00",
+  "line_items": [
+    {
+      "description": "Cloud services",
+      "quantity": "10.00",
+      "unit_price": "100.00",
+      "amount": "1000.00"
+    }
+  ]
+}

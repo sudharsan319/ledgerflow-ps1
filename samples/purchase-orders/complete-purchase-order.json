@@ -1,0 +1,26 @@
+{
+  "purchase_orders": [
+    {
+      "po_number": "PO-UPLOAD-1001",
+      "vendor_name": "Sample Stationery Ltd",
+      "vendor_id": null,
+      "po_date": "2026-11-09",
+      "currency": "USD",
+      "subtotal": "1000.00",
+      "tax": "100.00",
+      "total": "1100.00",
+      "approval_status": "approved",
+      "status": "open",
+      "approved_by": "Sample purchasing manager",
+      "description": "Fictional example PO; supplier approval is a separate action.",
+      "line_items": [
+        {
+          "description": "Office supplies",
+          "quantity": "10",
+          "unit_price": "100.00",
+          "amount": "1000.00"
+        }
+      ]
+    }
+  ]
+}

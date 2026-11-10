@@ -1,0 +1,49 @@
+{
+  "invoice_number": "INV-2026-0142",
+  "vendor_name": "Larkfield Stationers",
+  "po_number": "PO-77310",
+  "invoice_date": "2026-09-18",
+  "due_date": "2026-10-18",
+  "currency": "INR",
+  "subtotal": "14702.00",
+  "tax": "2646.36",
+  "total": "17348.36",
+  "line_items": [
+    {
+      "description": "A4 copier paper, 75 gsm, ream of 500",
+      "quantity": "20",
+      "unit_price": "285.0",
+      "amount": "5700.0"
+    },
+    {
+      "description": "Ballpoint pens, blue, box of 50",
+      "quantity": "4",
+      "unit_price": "420.0",
+      "amount": "1680.0"
+    },
+    {
+      "description": "Lever-arch files, A4, pack of 10",
+      "quantity": "3",
+      "unit_price": "899.0",
+      "amount": "2697.0"
+    },
+    {
+      "description": "Whiteboard markers, assorted, pack of 4",
+      "quantity": "6",
+      "unit_price": "160.0",
+      "amount": "960.0"
+    },
+    {
+      "description": "Desk organiser, mesh, black",
+      "quantity": "5",
+      "unit_price": "349.0",
+      "amount": "1745.0"
+    },
+    {
+      "description": "Sticky notes, 76 x 76 mm, pack of 12",
+      "quantity": "8",
+      "unit_price": "240.0",
+      "amount": "1920.0"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+Subject: ASA Case Study — [Your Name] — PS-1 Submission
+
+Hi [Coordinator Name],
+
+I chose PS-1: invoice processing from PDF to decision.
+
+My submission is LedgerFlow, a runnable invoice-processing application with document extraction, independent arithmetic checks, purchase-order matching, cumulative quantity and amount controls, and audited human review.
+
+Live process: [INSERT VERIFIED RENDER APP URL]
+Five-minute demo video: [INSERT VIDEO LINK]
+Source code: [INSERT VERIFIED GITHUB REPOSITORY URL; PLANNED: https://github.com/sudharsan319/ledgerflow-ps1]
+Reviewer access: [PROVIDE THE USERNAME AND PASSWORD PRIVATELY TO THE EVALUATOR]
+
+The walkthrough demonstrates a real PDF submission, duplicate detection and split invoices against one purchase order. I have also prepared ambiguous-PO and missing-field/incorrect-total cases for the live interview.
+
+The repository includes local setup instructions, demo inputs, a process map and verification commands. The hosted demonstration requires reviewer credentials. Its Free-plan storage can reset after a service restart or idle shutdown; a fresh instance starts with fictional procurement records. Please allow the service time to wake before the walkthrough.
+
+Regards,
+[Your Name]

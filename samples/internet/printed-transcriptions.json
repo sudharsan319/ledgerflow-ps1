@@ -1,0 +1,244 @@
+[
+  {
+    "document_id": "larkfield",
+    "filenames": [
+      "printed-larkfield-digital.pdf",
+      "printed-larkfield-scanned.jpg",
+      "printed-larkfield-scanned.pdf"
+    ],
+    "invoice": {
+      "invoice_number": "INV-2026-0142",
+      "vendor_name": "Larkfield Stationers",
+      "po_number": "PO-77310",
+      "invoice_date": "2026-09-18",
+      "due_date": "2026-10-18",
+      "currency": "INR",
+      "subtotal": "14702.00",
+      "tax": "2646.36",
+      "total": "17348.36",
+      "line_items": [
+        {
+          "description": "A4 copier paper, 75 gsm, ream of 500",
+          "quantity": "20",
+          "unit_price": "285.0",
+          "amount": "5700.0"
+        },
+        {
+          "description": "Ballpoint pens, blue, box of 50",
+          "quantity": "4",
+          "unit_price": "420.0",
+          "amount": "1680.0"
+        },
+        {
+          "description": "Lever-arch files, A4, pack of 10",
+          "quantity": "3",
+          "unit_price": "899.0",
+          "amount": "2697.0"
+        },
+        {
+          "description": "Whiteboard markers, assorted, pack of 4",
+          "quantity": "6",
+          "unit_price": "160.0",
+          "amount": "960.0"
+        },
+        {
+          "description": "Desk organiser, mesh, black",
+          "quantity": "5",
+          "unit_price": "349.0",
+          "amount": "1745.0"
+        },
+        {
+          "description": "Sticky notes, 76 x 76 mm, pack of 12",
+          "quantity": "8",
+          "unit_price": "240.0",
+          "amount": "1920.0"
+        }
+      ]
+    },
+    "verification": "Visually checked digital and scanned PDF pages; cross-checked publisher CC0 answer key. INR confirmed by publisher key and rupee amounts.",
+    "notes": [
+      "One logical invoice, three file encodings. Do not treat as three payable invoices."
+    ]
+  },
+  {
+    "document_id": "acme_widget",
+    "filenames": [
+      "printed-acme-commercial.pdf"
+    ],
+    "invoice": {
+      "invoice_number": "INV-2026-0042",
+      "vendor_name": "Acme Widget Co.",
+      "po_number": null,
+      "invoice_date": "2026-07-15",
+      "due_date": "2026-08-14",
+      "currency": "USD",
+      "subtotal": "146.65",
+      "tax": "12.10",
+      "total": "158.75",
+      "line_items": [
+        {
+          "description": "Widget Alpha (industrial grade)",
+          "quantity": "12",
+          "unit_price": "4.20",
+          "amount": "50.40"
+        },
+        {
+          "description": "Bracket Gamma (galvanized)",
+          "quantity": "40",
+          "unit_price": "0.85",
+          "amount": "34.00"
+        },
+        {
+          "description": "Flange Delta (precision)",
+          "quantity": "7",
+          "unit_price": "6.75",
+          "amount": "47.25"
+        },
+        {
+          "description": "Shipping and handling",
+          "quantity": "1",
+          "unit_price": "15.00",
+          "amount": "15.00"
+        }
+      ]
+    },
+    "verification": "Visually checked entire PDF and compared embedded text.",
+    "notes": [
+      "No PO reference appears in source. Match the unique demo PO by registered vendor and USD, or supply it as a documented reviewer decision."
+    ]
+  },
+  {
+    "document_id": "lindqvist",
+    "filenames": [
+      "printed-parseur-multipage.pdf"
+    ],
+    "invoice": {
+      "invoice_number": "LP-2026-3012",
+      "vendor_name": "Lindqvist Packaging AB",
+      "po_number": "4525768868",
+      "invoice_date": "2026-09-21",
+      "due_date": "2026-10-05",
+      "currency": "EUR",
+      "subtotal": "45078.62",
+      "tax": "0.00",
+      "total": "45078.62",
+      "line_items": [
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "10400",
+          "unit_price": "0.4929",
+          "amount": "5126.16"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "8200",
+          "unit_price": "0.4886",
+          "amount": "4006.52"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "6400",
+          "unit_price": "0.0589",
+          "amount": "376.96"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "18",
+          "unit_price": "282.20",
+          "amount": "5079.60"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "7900",
+          "unit_price": "0.5004",
+          "amount": "3953.16"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "1420",
+          "unit_price": "0.4873",
+          "amount": "691.97"
+        },
+        {
+          "description": "Thermal label 100x70 mm, 1000/roll",
+          "quantity": "30",
+          "unit_price": "7.14",
+          "amount": "214.20"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "11",
+          "unit_price": "257.53",
+          "amount": "2832.83"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "4200",
+          "unit_price": "0.4840",
+          "amount": "2032.80"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "32",
+          "unit_price": "12.05",
+          "amount": "385.60"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "67",
+          "unit_price": "10.94",
+          "amount": "732.98"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "12600",
+          "unit_price": "0.0616",
+          "amount": "776.16"
+        },
+        {
+          "description": "Thermoforming bottom film 420 mm, 300 micrometres",
+          "quantity": "33",
+          "unit_price": "303.73",
+          "amount": "10023.09"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "37500",
+          "unit_price": "0.0633",
+          "amount": "2373.75"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "14000",
+          "unit_price": "0.0606",
+          "amount": "848.40"
+        },
+        {
+          "description": "Thermal label 100x70 mm, 1000/roll",
+          "quantity": "270",
+          "unit_price": "6.86",
+          "amount": "1852.20"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "46",
+          "unit_price": "11.38",
+          "amount": "523.48"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "12",
+          "unit_price": "270.73",
+          "amount": "3248.76"
+        }
+      ]
+    },
+    "verification": "Visually checked both pages. OCR corroborates core fields but makes some row errors; row quantity18 and unit price7.14 manually verified from image.",
+    "notes": [
+      "41,829.86 carried forward is not an additional line item.",
+      "18 invoice rows sum to45,078.62; tax is explicitly0% reverse charge.",
+      "Approval stamp and handwritten PO note must not be used as authority to auto-approve.",
+      "Line descriptions expand the micrometre symbol into text for portability; numeric fields are transcribed."
+    ]
+  }
+]

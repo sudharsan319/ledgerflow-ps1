@@ -1,0 +1,18 @@
+PURCHASE ORDER
+FICTIONAL TEST DOCUMENT - not a real purchasing authorization
+
+PO number: PO-UPLOAD-1001
+Vendor name: Sample Stationery Ltd
+PO date: 2026-11-09
+Currency: USD
+Subtotal: 1000.00
+Tax: 100.00
+Total: 1100.00
+Approval status: approved
+PO status: open
+Approved by: Sample purchasing manager
+
+Description | Quantity | Unit price | Amount
+Office supplies | 10 | 100.00 | 1000.00
+
+Supplier approval is a separate process. This sample vendor starts pending.

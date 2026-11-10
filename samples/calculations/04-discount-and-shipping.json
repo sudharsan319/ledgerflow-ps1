@@ -1,0 +1,44 @@
+{
+  "vendor_name": "Acme Cloud Services",
+  "po_number": "PO-2026-001",
+  "invoice_date": "2026-11-09",
+  "currency": "USD",
+  "subtotal": "1000",
+  "tax": "171",
+  "total": "1121",
+  "tax_mode": "exclusive",
+  "subtotal_scope": "before_adjustments",
+  "line_items": [
+    {
+      "description": "Services",
+      "quantity": "10",
+      "unit_price": "100",
+      "amount": "1000"
+    }
+  ],
+  "tax_components": [
+    {
+      "label": "Tax on adjusted base",
+      "amount": "171",
+      "rate": "18",
+      "taxable_amount": "950"
+    }
+  ],
+  "adjustments": [
+    {
+      "label": "Order discount",
+      "kind": "discount",
+      "amount": "100",
+      "included_in_subtotal": false,
+      "evidence": "Order discount: 100"
+    },
+    {
+      "label": "Shipping",
+      "kind": "charge",
+      "amount": "50",
+      "included_in_subtotal": false,
+      "evidence": "Shipping: 50"
+    }
+  ],
+  "invoice_number": "CALC-DEMO-004"
+}

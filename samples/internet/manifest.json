@@ -1,0 +1,145 @@
+{
+  "retrieved_on": "2026-11-09",
+  "note": "Original downloads are unmodified. Corrections are separately transcribed, with any extra test assumptions explicitly listed. POs are fictional test fixtures.",
+  "cases": [
+    {
+      "id": "printed-larkfield-digital",
+      "file": "originals/printed-larkfield-digital.pdf",
+      "kind": "digital_tax_invoice",
+      "source_url": "https://filedone.ai/sample-files/sample-invoice-pdf",
+      "download_url": "https://filedone.ai/sample-files/sample-invoice.pdf",
+      "sha256": "545655fc231453aaf2a6c60b44b3b137d506db0d1d79bff12eeef86044aedb86",
+      "normalized_file": "corrections/larkfield.json",
+      "po_number": "PO-77310",
+      "document_identity": "larkfield",
+      "verified_total": "17348.36",
+      "currency": "INR",
+      "expected_after_verified_correction": "approved",
+      "assumptions": [
+        "Approved vendor status and PO budget are fictional test procurement records, not endorsements of a real supplier."
+      ],
+      "source_notes": [
+        "One logical invoice, three file encodings. Do not treat as three payable invoices."
+      ]
+    },
+    {
+      "id": "printed-larkfield-scanned-jpg",
+      "file": "originals/printed-larkfield-scanned.jpg",
+      "kind": "scanned_tax_invoice_image",
+      "source_url": "https://filedone.ai/sample-files/sample-scanned-invoice",
+      "download_url": "https://filedone.ai/sample-files/sample-scanned-invoice.jpg",
+      "sha256": "eb78cd376ecfda508d37feb6ce4dcd7c91ee81b7227b6f3860a1b8c09cab05fc",
+      "normalized_file": "corrections/larkfield.json",
+      "po_number": "PO-77310",
+      "document_identity": "larkfield",
+      "verified_total": "17348.36",
+      "currency": "INR",
+      "expected_after_verified_correction": "approved",
+      "assumptions": [
+        "Approved vendor status and PO budget are fictional test procurement records, not endorsements of a real supplier."
+      ],
+      "source_notes": [
+        "One logical invoice, three file encodings. Do not treat as three payable invoices."
+      ]
+    },
+    {
+      "id": "printed-larkfield-scanned-pdf",
+      "file": "originals/printed-larkfield-scanned.pdf",
+      "kind": "scanned_tax_invoice_pdf",
+      "source_url": "https://filedone.ai/sample-files/sample-scanned-invoice",
+      "download_url": "https://filedone.ai/sample-files/sample-scanned-invoice.pdf",
+      "sha256": "605d7cbe6beff3f26dd0f11dbf23179873ee927244dbfcd0446e6052750ede5f",
+      "normalized_file": "corrections/larkfield.json",
+      "po_number": "PO-77310",
+      "document_identity": "larkfield",
+      "verified_total": "17348.36",
+      "currency": "INR",
+      "expected_after_verified_correction": "approved",
+      "assumptions": [
+        "Approved vendor status and PO budget are fictional test procurement records, not endorsements of a real supplier."
+      ],
+      "source_notes": [
+        "One logical invoice, three file encodings. Do not treat as three payable invoices."
+      ]
+    },
+    {
+      "id": "printed-acme-commercial",
+      "file": "originals/printed-acme-commercial.pdf",
+      "kind": "digital_commercial_invoice",
+      "source_url": "https://examplepdf.com/examples/invoice/",
+      "download_url": "https://examplepdf.com/assets/pdf/examples/invoice-sample.pdf",
+      "sha256": "81bce86b188c720cf899574506f3faa88b77c801f36465d2441516b7febd8982",
+      "normalized_file": "corrections/acme_widget.json",
+      "po_number": "INTERNET-PO-ACME-001",
+      "document_identity": "acme_widget",
+      "verified_total": "158.75",
+      "currency": "USD",
+      "expected_after_verified_correction": "approved",
+      "assumptions": [
+        "Approved vendor status and PO budget are fictional test procurement records, not endorsements of a real supplier.",
+        "Invoice has no PO number; the unique open vendor/currency PO is a deliberate test match."
+      ],
+      "source_notes": [
+        "No PO reference appears in source. Match the unique demo PO by registered vendor and USD, or supply it as a documented reviewer decision."
+      ]
+    },
+    {
+      "id": "printed-parseur-multipage",
+      "file": "originals/printed-parseur-multipage.pdf",
+      "kind": "multipage_scanned_invoice_with_annotations",
+      "source_url": "https://parseur.com/blog/sample-pdf-invoice",
+      "download_url": "https://parseur.com/samples/sample-invoice.pdf",
+      "sha256": "8c449961350122564e141a940ecfa3778afc7ca2ff2b9ce4a4788de8b87fa0d7",
+      "normalized_file": "corrections/lindqvist.json",
+      "po_number": "4525768868",
+      "document_identity": "lindqvist",
+      "verified_total": "45078.62",
+      "currency": "EUR",
+      "expected_after_verified_correction": "approved",
+      "assumptions": [
+        "Approved vendor status and PO budget are fictional test procurement records, not endorsements of a real supplier."
+      ],
+      "source_notes": [
+        "41,829.86 carried forward is not an additional line item.",
+        "18 invoice rows sum to45,078.62; tax is explicitly0% reverse charge.",
+        "Approval stamp and handwritten PO note must not be used as authority to auto-approve.",
+        "Line descriptions expand the micrometre symbol into text for portability; numeric fields are transcribed."
+      ]
+    },
+    {
+      "id": "handwritten-rillion-invoice",
+      "file": "originals/handwritten-rillion-invoice.png",
+      "kind": "handwritten_invoice_photo",
+      "source_url": "https://www.rillion.com/finance-tools/automated-invoice-scanning-ocr-tool/",
+      "download_url": "https://www.rillion.com/hubfs/website-images/finance%20tools/invoice_capture_handwritten_invoice_sample.png",
+      "sha256": "82c22ec7d75e348f27df5a116925be9dbdc2fc73ebb3d49a7a1241bb3c350d52",
+      "normalized_file": "corrections/handwritten-rillion-confirmed-usd.json",
+      "po_number": "INTERNET-PO-HANDWRITTEN-001",
+      "document_identity": "handwritten_company",
+      "verified_total": "1470.00",
+      "currency": "USD (demo assumption; source only $)",
+      "expected_after_verified_correction": "approved only after explicit USD confirmation",
+      "assumptions": [
+        "USD is a mock-procurement assumption. It is NOT established by the source. In a real workflow, ask the vendor to confirm currency before approving.",
+        "Vendor approval and unique PO are invented test procurement; invoice number/date/items/amounts were visually transcribed."
+      ]
+    },
+    {
+      "id": "handwritten-ocrspace-rent-receipt",
+      "file": "originals/handwritten-ocrspace-rent-receipt.jpg",
+      "kind": "handwritten_receipt_negative_case",
+      "source_url": "https://ocr.space/handwriting",
+      "download_url": "https://ocr.space/content/images/handwritten-receipt-ocr.jpg",
+      "sha256": "9d310db88b21ea127c305b5874481d730d7a809d7bd83a0af7f14e7e33997510",
+      "po_number": "INTERNET-PO-RECEIPT-HOLD",
+      "document_identity": "unidentified_rent_receipt",
+      "verified_total": "1000.00",
+      "currency": "unknown ($ only)",
+      "expected_after_verified_correction": "must remain unapproved; obtain a valid invoice and issuer details",
+      "assumptions": [
+        "Placeholder PO is closed and placeholder vendor is unapproved. Neither is evidence of an actual issuer or purchasing authorization.",
+        "John Smith is the payer, not the supplier. Receipt number008 must not silently become an invoice number."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+INVOICE
+Fictional evaluation fixture; no payment is due.
+
+Invoice Number: ACME-2026-1109
+Vendor: Acme Cloud Services
+Vendor ID: vendor-acme
+PO Number: PO-2026-001
+Invoice Date: 2026-11-09
+Due Date: 2026-12-09
+Currency: USD
+Subtotal: 1000.00
+Tax: 100.00
+Total: 1100.00
+
+Description | Quantity | Unit price | Amount
+Cloud services | 10.00 | 100.00 | 1000.00

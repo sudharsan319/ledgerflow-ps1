@@ -1,0 +1,147 @@
+{
+  "_note": "Answer key written by scripts/make-sample-files.py, the script that drew the file: every value below is one it printed. Do not edit by hand.",
+  "sample": "sample-invoice-pdf",
+  "page": "/sample-files/sample-invoice-pdf",
+  "files": [
+    "sample-invoice.pdf"
+  ],
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "fictional": true,
+  "document": "invoice",
+  "language": "English",
+  "currency": "INR",
+  "fields": {
+    "invoice_number": "INV-2026-0142",
+    "invoice_date": "2026-09-18",
+    "due_date": "2026-10-18",
+    "order_ref": "PO-77310",
+    "seller": {
+      "name": "Larkfield Stationers",
+      "address": [
+        "22 Example Market, Sampleton 000 000"
+      ],
+      "email": "accounts@larkfield.example",
+      "tax_number": "SPECIMEN-TAX-0001"
+    },
+    "bill_to": {
+      "name": "Example Traders (fictional)",
+      "address": [
+        "Unit 5, Specimen Industrial Estate",
+        "Sampleton 000 000"
+      ],
+      "tax_number": "SPECIMEN-TAX-0002"
+    },
+    "payment": {
+      "method": "bank transfer",
+      "bank": "Specimen Bank",
+      "account": "SPECIMEN-0000-1111",
+      "terms_days": 30
+    },
+    "gst_rate": 0.18
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "description": "A4 copier paper, 75 gsm, ream of 500",
+      "quantity": 20,
+      "unit_price": 285.0,
+      "amount": 5700.0
+    },
+    {
+      "line": 2,
+      "description": "Ballpoint pens, blue, box of 50",
+      "quantity": 4,
+      "unit_price": 420.0,
+      "amount": 1680.0
+    },
+    {
+      "line": 3,
+      "description": "Lever-arch files, A4, pack of 10",
+      "quantity": 3,
+      "unit_price": 899.0,
+      "amount": 2697.0
+    },
+    {
+      "line": 4,
+      "description": "Whiteboard markers, assorted, pack of 4",
+      "quantity": 6,
+      "unit_price": 160.0,
+      "amount": 960.0
+    },
+    {
+      "line": 5,
+      "description": "Desk organiser, mesh, black",
+      "quantity": 5,
+      "unit_price": 349.0,
+      "amount": 1745.0
+    },
+    {
+      "line": 6,
+      "description": "Sticky notes, 76 x 76 mm, pack of 12",
+      "quantity": 8,
+      "unit_price": 240.0,
+      "amount": 1920.0
+    }
+  ],
+  "totals": {
+    "subtotal": 14702.0,
+    "gst": 2646.36,
+    "total": 17348.36
+  },
+  "notes": [
+    "The file has a real text layer: this is the text it holds.",
+    "A cell left blank on the page is null here and empty in the CSV. Amounts are numbers in rupees; dates are ISO 8601."
+  ],
+  "csv": {
+    "file": "sample-invoice-pdf.expected.csv",
+    "columns": [
+      "line",
+      "description",
+      "quantity",
+      "unit_price",
+      "amount"
+    ],
+    "rows": 6
+  },
+  "transcript": {
+    "rule": "Every line of text on each page, in the order the script drew it: a block at a time, top to bottom, a right-hand column after the left. Strings drawn one after another on the same baseline (the cells of a table row, a label and its value) are one line, joined by a space. Wrapped paragraphs keep the page's line breaks.",
+    "pages": [
+      {
+        "page": 1,
+        "lines": [
+          "Larkfield Stationers",
+          "A fictional company",
+          "22 Example Market, Sampleton 000 000",
+          "accounts@larkfield.example",
+          "Tax no.: SPECIMEN-TAX-0001",
+          "TAX INVOICE",
+          "Invoice no. INV-2026-0142",
+          "Invoice date 18 September 2026",
+          "Due date 18 October 2026",
+          "Order ref. PO-77310",
+          "BILL TO",
+          "Example Traders (fictional)",
+          "Unit 5, Specimen Industrial Estate",
+          "Sampleton 000 000",
+          "Tax no.: SPECIMEN-TAX-0002",
+          "# Description Qty Unit price Amount",
+          "1 A4 copier paper, 75 gsm, ream of 500 20 ₹285.00 ₹5,700.00",
+          "2 Ballpoint pens, blue, box of 50 4 ₹420.00 ₹1,680.00",
+          "3 Lever-arch files, A4, pack of 10 3 ₹899.00 ₹2,697.00",
+          "4 Whiteboard markers, assorted, pack of 4 6 ₹160.00 ₹960.00",
+          "5 Desk organiser, mesh, black 5 ₹349.00 ₹1,745.00",
+          "6 Sticky notes, 76 x 76 mm, pack of 12 8 ₹240.00 ₹1,920.00",
+          "Subtotal ₹14,702.00",
+          "GST at 18% ₹2,646.36",
+          "Total due ₹17,348.36",
+          "Payment",
+          "Bank transfer to Specimen Bank, account SPECIMEN-0000-1111, within",
+          "30 days. Please quote the invoice number with your payment.",
+          "Every amount is quantity times unit price; the subtotal, GST and total add",
+          "up to the paisa.",
+          "SPECIMEN - fictional document made by filedone.ai for testing. Free to use (CC0 1.0). Page 1 of 1"
+        ]
+      }
+    ]
+  }
+}

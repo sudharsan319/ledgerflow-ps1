@@ -1,0 +1,78 @@
+[
+  {
+    "id": "handwritten-rillion-invoice",
+    "file": "originals/handwritten-rillion-invoice.png",
+    "verification": "Visually read original downloaded image; currency was deliberately left unknown.",
+    "invoice": {
+      "invoice_number": "0001",
+      "vendor_name": "My company",
+      "vendor_id": null,
+      "po_number": null,
+      "invoice_date": "2026-02-20",
+      "due_date": "2026-03-07",
+      "currency": null,
+      "subtotal": "1400.00",
+      "tax": "70.00",
+      "total": "1470.00",
+      "line_items": [
+        {
+          "description": "Coffee",
+          "quantity": "50",
+          "unit_price": "10.00",
+          "amount": "500.00"
+        },
+        {
+          "description": "Cups",
+          "quantity": "100",
+          "unit_price": "9.00",
+          "amount": "900.00"
+        }
+      ]
+    },
+    "additional_observed_fields": {
+      "currency_symbol": "$",
+      "tax_rate": "5.00%",
+      "billed_to": "Rillion",
+      "payment_method": "Virtual card"
+    },
+    "unresolved": [
+      "ISO currency code is absent; a matching PO alone does not prove the invoice currency.",
+      "PO number is absent; an explicitly created single compatible demo PO could be inferred only after currency is resolved."
+    ],
+    "expected_behavior": "Local OCR and vision-only extraction require review. Even a visually transcribed invoice remains in review until currency is confirmed; after an explicitly documented demo currency assumption or real vendor confirmation, a full correction can pass deterministic rules against a matching PO."
+  },
+  {
+    "id": "handwritten-ocrspace-rent-receipt",
+    "file": "originals/handwritten-ocrspace-rent-receipt.jpg",
+    "verification": "Visually read downloaded image, corroborated by publisher sample transcription.",
+    "invoice": {
+      "invoice_number": null,
+      "vendor_name": null,
+      "vendor_id": null,
+      "po_number": null,
+      "invoice_date": "2023-08-01",
+      "due_date": null,
+      "currency": null,
+      "subtotal": null,
+      "tax": null,
+      "total": "1000.00",
+      "line_items": []
+    },
+    "additional_observed_fields": {
+      "document_type": "receipt",
+      "receipt_number": "008",
+      "received_from": "JOHN SMITH",
+      "purpose": "RENT",
+      "currency_symbol": "$",
+      "tax_registration": "N/A"
+    },
+    "unresolved": [
+      "Issuer/vendor missing.",
+      "No explicit ISO currency.",
+      "No invoice identity: 008 is a receipt number.",
+      "No explicit subtotal/tax breakdown.",
+      "This is acknowledgement of payment, not a request for payment."
+    ],
+    "expected_behavior": "Needs review; do not turn payer John Smith into a vendor or auto-approve this as an invoice. A fabricated PO must not resolve the missing issuer and document-type uncertainty."
+  }
+]

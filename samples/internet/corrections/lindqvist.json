@@ -1,0 +1,121 @@
+{
+  "invoice_number": "LP-2026-3012",
+  "vendor_name": "Lindqvist Packaging AB",
+  "po_number": "4525768868",
+  "invoice_date": "2026-09-21",
+  "due_date": "2026-10-05",
+  "currency": "EUR",
+  "subtotal": "45078.62",
+  "tax": "0.00",
+  "total": "45078.62",
+  "line_items": [
+    {
+      "description": "Shipping carton 400x300x150 mm, printed",
+      "quantity": "10400",
+      "unit_price": "0.4929",
+      "amount": "5126.16"
+    },
+    {
+      "description": "Shipping carton 400x300x150 mm, printed",
+      "quantity": "8200",
+      "unit_price": "0.4886",
+      "amount": "4006.52"
+    },
+    {
+      "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+      "quantity": "6400",
+      "unit_price": "0.0589",
+      "amount": "376.96"
+    },
+    {
+      "description": "Top film 400 mm, 60 micrometres, printed",
+      "quantity": "18",
+      "unit_price": "282.20",
+      "amount": "5079.60"
+    },
+    {
+      "description": "Shipping carton 400x300x150 mm, printed",
+      "quantity": "7900",
+      "unit_price": "0.5004",
+      "amount": "3953.16"
+    },
+    {
+      "description": "Shipping carton 400x300x150 mm, printed",
+      "quantity": "1420",
+      "unit_price": "0.4873",
+      "amount": "691.97"
+    },
+    {
+      "description": "Thermal label 100x70 mm, 1000/roll",
+      "quantity": "30",
+      "unit_price": "7.14",
+      "amount": "214.20"
+    },
+    {
+      "description": "Top film 400 mm, 60 micrometres, printed",
+      "quantity": "11",
+      "unit_price": "257.53",
+      "amount": "2832.83"
+    },
+    {
+      "description": "Shipping carton 400x300x150 mm, printed",
+      "quantity": "4200",
+      "unit_price": "0.4840",
+      "amount": "2032.80"
+    },
+    {
+      "description": "Stretch film 500 mm, 23 micrometres, cast",
+      "quantity": "32",
+      "unit_price": "12.05",
+      "amount": "385.60"
+    },
+    {
+      "description": "Stretch film 500 mm, 23 micrometres, cast",
+      "quantity": "67",
+      "unit_price": "10.94",
+      "amount": "732.98"
+    },
+    {
+      "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+      "quantity": "12600",
+      "unit_price": "0.0616",
+      "amount": "776.16"
+    },
+    {
+      "description": "Thermoforming bottom film 420 mm, 300 micrometres",
+      "quantity": "33",
+      "unit_price": "303.73",
+      "amount": "10023.09"
+    },
+    {
+      "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+      "quantity": "37500",
+      "unit_price": "0.0633",
+      "amount": "2373.75"
+    },
+    {
+      "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+      "quantity": "14000",
+      "unit_price": "0.0606",
+      "amount": "848.40"
+    },
+    {
+      "description": "Thermal label 100x70 mm, 1000/roll",
+      "quantity": "270",
+      "unit_price": "6.86",
+      "amount": "1852.20"
+    },
+    {
+      "description": "Stretch film 500 mm, 23 micrometres, cast",
+      "quantity": "46",
+      "unit_price": "11.38",
+      "amount": "523.48"
+    },
+    {
+      "description": "Top film 400 mm, 60 micrometres, printed",
+      "quantity": "12",
+      "unit_price": "270.73",
+      "amount": "3248.76"
+    }
+  ]
+}

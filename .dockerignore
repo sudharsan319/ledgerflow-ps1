@@ -1,0 +1,13 @@
+.git
+.venv
+.env
+.env.*
+frontend/node_modules
+frontend/dist
+data
+__pycache__
+.pytest_cache
+*.pdf
+tmp
+output
+samples/manual-samples

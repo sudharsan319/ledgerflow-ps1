@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: ledgerflow-ps1
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /healthz
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: LEDGERFLOW_DATA_DIR
+        value: /app/data
+      - key: LEDGERFLOW_AUTH_USERNAME
+        value: reviewer
+      - key: LEDGERFLOW_AUTH_PASSWORD
+        generateValue: true
+      - key: ENABLE_OPENROUTER
+        value: "false"
+      - key: OPENROUTER_MODEL
+        value: openai/gpt-4o-mini

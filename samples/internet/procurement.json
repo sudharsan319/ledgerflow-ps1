@@ -1,0 +1,264 @@
+{
+  "vendors": [
+    {
+      "id": "internet-larkfield",
+      "name": "Larkfield Stationers",
+      "aliases": [],
+      "approved": true
+    },
+    {
+      "id": "internet-acme-widget",
+      "name": "Acme Widget Co.",
+      "aliases": [],
+      "approved": true
+    },
+    {
+      "id": "internet-lindqvist",
+      "name": "Lindqvist Packaging AB",
+      "aliases": [],
+      "approved": true
+    },
+    {
+      "id": "internet-handwritten-company",
+      "name": "My company",
+      "aliases": [],
+      "approved": true
+    },
+    {
+      "id": "internet-unidentified-receipt-issuer",
+      "name": "TEST ONLY - Unidentified receipt issuer",
+      "aliases": [],
+      "approved": false
+    }
+  ],
+  "purchase_orders": [
+    {
+      "po_number": "PO-77310",
+      "vendor_id": "internet-larkfield",
+      "currency": "INR",
+      "total": "17348.36",
+      "status": "open",
+      "description": "TEST ONLY \u2014 mock procurement for downloaded larkfield invoice; gross total including tax",
+      "line_items": [
+        {
+          "description": "A4 copier paper, 75 gsm, ream of 500",
+          "quantity": "20",
+          "unit_price": "285.0",
+          "amount": "5700.0"
+        },
+        {
+          "description": "Ballpoint pens, blue, box of 50",
+          "quantity": "4",
+          "unit_price": "420.0",
+          "amount": "1680.0"
+        },
+        {
+          "description": "Lever-arch files, A4, pack of 10",
+          "quantity": "3",
+          "unit_price": "899.0",
+          "amount": "2697.0"
+        },
+        {
+          "description": "Whiteboard markers, assorted, pack of 4",
+          "quantity": "6",
+          "unit_price": "160.0",
+          "amount": "960.0"
+        },
+        {
+          "description": "Desk organiser, mesh, black",
+          "quantity": "5",
+          "unit_price": "349.0",
+          "amount": "1745.0"
+        },
+        {
+          "description": "Sticky notes, 76 x 76 mm, pack of 12",
+          "quantity": "8",
+          "unit_price": "240.0",
+          "amount": "1920.0"
+        }
+      ]
+    },
+    {
+      "po_number": "INTERNET-PO-ACME-001",
+      "vendor_id": "internet-acme-widget",
+      "currency": "USD",
+      "total": "158.75",
+      "status": "open",
+      "description": "TEST ONLY \u2014 mock procurement for downloaded acme_widget invoice; gross total including tax",
+      "line_items": [
+        {
+          "description": "Widget Alpha (industrial grade)",
+          "quantity": "12",
+          "unit_price": "4.20",
+          "amount": "50.40"
+        },
+        {
+          "description": "Bracket Gamma (galvanized)",
+          "quantity": "40",
+          "unit_price": "0.85",
+          "amount": "34.00"
+        },
+        {
+          "description": "Flange Delta (precision)",
+          "quantity": "7",
+          "unit_price": "6.75",
+          "amount": "47.25"
+        },
+        {
+          "description": "Shipping and handling",
+          "quantity": "1",
+          "unit_price": "15.00",
+          "amount": "15.00"
+        }
+      ]
+    },
+    {
+      "po_number": "4525768868",
+      "vendor_id": "internet-lindqvist",
+      "currency": "EUR",
+      "total": "45078.62",
+      "status": "open",
+      "description": "TEST ONLY \u2014 mock procurement for downloaded lindqvist invoice; gross total including tax",
+      "line_items": [
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "10400",
+          "unit_price": "0.4929",
+          "amount": "5126.16"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "8200",
+          "unit_price": "0.4886",
+          "amount": "4006.52"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "6400",
+          "unit_price": "0.0589",
+          "amount": "376.96"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "18",
+          "unit_price": "282.20",
+          "amount": "5079.60"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "7900",
+          "unit_price": "0.5004",
+          "amount": "3953.16"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "1420",
+          "unit_price": "0.4873",
+          "amount": "691.97"
+        },
+        {
+          "description": "Thermal label 100x70 mm, 1000/roll",
+          "quantity": "30",
+          "unit_price": "7.14",
+          "amount": "214.20"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "11",
+          "unit_price": "257.53",
+          "amount": "2832.83"
+        },
+        {
+          "description": "Shipping carton 400x300x150 mm, printed",
+          "quantity": "4200",
+          "unit_price": "0.4840",
+          "amount": "2032.80"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "32",
+          "unit_price": "12.05",
+          "amount": "385.60"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "67",
+          "unit_price": "10.94",
+          "amount": "732.98"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "12600",
+          "unit_price": "0.0616",
+          "amount": "776.16"
+        },
+        {
+          "description": "Thermoforming bottom film 420 mm, 300 micrometres",
+          "quantity": "33",
+          "unit_price": "303.73",
+          "amount": "10023.09"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "37500",
+          "unit_price": "0.0633",
+          "amount": "2373.75"
+        },
+        {
+          "description": "Vacuum pouch 200x300 mm, 90 micrometres",
+          "quantity": "14000",
+          "unit_price": "0.0606",
+          "amount": "848.40"
+        },
+        {
+          "description": "Thermal label 100x70 mm, 1000/roll",
+          "quantity": "270",
+          "unit_price": "6.86",
+          "amount": "1852.20"
+        },
+        {
+          "description": "Stretch film 500 mm, 23 micrometres, cast",
+          "quantity": "46",
+          "unit_price": "11.38",
+          "amount": "523.48"
+        },
+        {
+          "description": "Top film 400 mm, 60 micrometres, printed",
+          "quantity": "12",
+          "unit_price": "270.73",
+          "amount": "3248.76"
+        }
+      ]
+    },
+    {
+      "po_number": "INTERNET-PO-HANDWRITTEN-001",
+      "vendor_id": "internet-handwritten-company",
+      "currency": "USD",
+      "total": "1470.00",
+      "status": "open",
+      "description": "TEST ONLY \u2014 mock USD purchase of coffee and cups; handwritten source only states $, USD needs vendor confirmation outside this test",
+      "line_items": [
+        {
+          "description": "Coffee",
+          "quantity": "50",
+          "unit_price": "10.00",
+          "amount": "500.00"
+        },
+        {
+          "description": "Cups",
+          "quantity": "100",
+          "unit_price": "9.00",
+          "amount": "900.00"
+        }
+      ]
+    },
+    {
+      "po_number": "INTERNET-PO-RECEIPT-HOLD",
+      "vendor_id": "internet-unidentified-receipt-issuer",
+      "currency": "USD",
+      "total": "1000.00",
+      "status": "closed",
+      "description": "NEGATIVE TEST ONLY \u2014 closed placeholder budget; issuer and currency unconfirmed. A paid rent receipt is not an unpaid invoice."
+    }
+  ]
+}

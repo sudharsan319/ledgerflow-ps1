@@ -1,0 +1,3 @@
+invoice_number,vendor_name,vendor_id,po_number,invoice_date,due_date,currency,subtotal,tax,total,line_items
+BATCH-ACME-01,Acme Cloud Services,vendor-acme,PO-2026-001,2026-11-09,2026-12-09,USD,650.00,0.00,650.00,"[{""description"": ""Cloud services"", ""quantity"": ""6.50"", ""unit_price"": ""100.00"", ""amount"": ""650.00""}]"
+BATCH-NS-01,Northstar Office Supply,vendor-northstar,PO-2026-002,2026-11-09,2026-12-09,USD,1000.00,0.00,1000.00,"[{""description"": ""Office equipment"", ""quantity"": ""0.2"", ""unit_price"": ""5000.00"", ""amount"": ""1000.00""}]"

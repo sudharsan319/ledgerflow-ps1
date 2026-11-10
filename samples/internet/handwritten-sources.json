@@ -1,0 +1,41 @@
+[
+  {
+    "id": "handwritten-rillion-invoice",
+    "file": "originals/handwritten-rillion-invoice.png",
+    "source_page": "https://www.rillion.com/finance-tools/automated-invoice-scanning-ocr-tool/",
+    "download_url": "https://www.rillion.com/hubfs/website-images/finance%20tools/invoice_capture_handwritten_invoice_sample.png",
+    "publisher": "Rillion",
+    "retrieved_on": "2026-11-09",
+    "document_kind": "handwritten invoice",
+    "authenticity": "Published vendor demo explicitly labeled Handwritten invoice / Hand-drawn, informal style; visually inspected ink handwriting on photographed paper. The business and transaction are sample content.",
+    "license": null,
+    "rights_note": "No explicit asset reuse license was found on the source page. Retained locally for requested testing with attribution; do not present as a CC0/open-license dataset.",
+    "notes": [
+      "The document shows only dollar signs, not an ISO currency code.",
+      "Rillion is the billed customer; My company is the vendor.",
+      "There is no PO reference in the document."
+    ],
+    "sha256": "82c22ec7d75e348f27df5a116925be9dbdc2fc73ebb3d49a7a1241bb3c350d52",
+    "size_bytes": 1990594
+  },
+  {
+    "id": "handwritten-ocrspace-rent-receipt",
+    "file": "originals/handwritten-ocrspace-rent-receipt.jpg",
+    "source_page": "https://ocr.space/handwriting",
+    "download_url": "https://ocr.space/content/images/handwritten-receipt-ocr.jpg",
+    "publisher": "OCR.space",
+    "retrieved_on": "2026-11-09",
+    "document_kind": "handwritten rent receipt (not an invoice)",
+    "authenticity": "Published OCR vendor handwriting demonstration; visually inspected a preprinted receipt form filled in using blue-ink handwriting.",
+    "license": null,
+    "rights_note": "No explicit asset reuse license was found on the source page. Retained locally for requested testing with attribution; do not present as a CC0/open-license dataset.",
+    "notes": [
+      "John Smith is the payer named after Received from, not an identified supplier.",
+      "The issuer/vendor is not visible.",
+      "Dollar symbol does not uniquely identify currency.",
+      "Receipt number 008 is visible; a receipt is not proof of an unpaid invoice. Use as a review/unsupported-document negative example."
+    ],
+    "sha256": "9d310db88b21ea127c305b5874481d730d7a809d7bd83a0af7f14e7e33997510",
+    "size_bytes": 36625
+  }
+]
