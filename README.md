@@ -141,7 +141,7 @@ The procurement screen starts with fictional Acme Cloud Services and Northstar O
 
 See [samples](samples/) for real input files, [the demo script](docs/demo.md) for a five-minute walkthrough, and [the architecture](docs/architecture.md) for the process map. Regenerate samples with `uv run python scripts/generate_samples.py`.
 
-For downloaded internet examples, including genuine handwriting, see the [internet test pack and observed upload outcomes](samples/internet/README.md). It includes seven original files, five historical test PO records, separate verified correction fixtures, and results from both local extraction and live OpenRouter calls. Those recorded results predate the required PO review policy; legacy test POs need **Review / validate** before reproducing the same invoice outcomes. The [ZIP](samples/internet-invoice-test-pack.zip) contains the complete sample pack. Its test runner uses isolated databases, so benchmarking does not spend your workspace's PO balances.
+For downloaded internet examples, including handwriting, see the [internet test fixtures and historical upload observations](samples/internet/README.md). The source repository includes seven public sample files with publisher attribution, five historical test PO records, and separate correction fixtures. The documented observations predate the required PO review policy; legacy test POs need **Review / validate** before reproducing the same invoice outcomes. Historical runtime result files and the local ZIP are not included in the published source. Reproduce checks with `uv run python scripts/verify_internet_samples.py --local`; the runner uses isolated databases, so benchmarking does not spend your workspace's PO balances.
 
 ## Verify
 

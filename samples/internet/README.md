@@ -2,7 +2,7 @@
 
 Downloaded on **9 November 2026**. This pack contains **seven original files representing four distinct invoices and one receipt**. The Larkfield digital PDF, scanned PDF, and scanned JPG are the same invoice in three formats. Source downloads are unmodified; manually transcribed corrections live separately.
 
-Five fictional test vendor/PO records have been imported into your local LedgerFlow workspace. Four vendors are approved for the test; the unidentified receipt issuer is deliberately unapproved and its placeholder PO is closed. Your existing invoice history was preserved. The local backend was restarted and verified to have OpenRouter enabled with `openai/gpt-4o-mini`. No key is stored in this pack.
+During the original local evaluation on 9 November 2026, five fictional test vendor/PO records were imported into an evaluation workspace. Four vendors were approved for that test; the unidentified receipt issuer was deliberately unapproved and its placeholder PO was closed. Existing invoice history was preserved, and that backend was verified with OpenRouter enabled using `openai/gpt-4o-mini`. These are historical setup details, not the state of a fresh installation or the hosted app. A new workspace starts with its own fictional seed records; use the fixture-import instructions below to add this pack. No key is stored in this pack.
 
 **Compatibility with the current PO review policy:** The observed results below and their result files predate the requirement for a reviewed, validated PO. Imported legacy test POs now appear as **Unverified PO**. Before expecting the same corrected-invoice outcomes, open **Procurement → Review / validate** for each relevant PO, complete its required fields, and confirm the reviewed authorization. Existing vendor approval is retained; any newly imported vendor remains pending and needs a separate **Vendors → Review vendor** decision. Previous invoice decisions and commitments are preserved. See the [new PO upload samples](../purchase-orders/README.md) for the current workflow. Historical results below remain unchanged.
 
@@ -89,10 +89,8 @@ uv run python scripts/verify_internet_samples.py --openrouter --case handwritten
 
 The runner creates a fresh temporary database per original, uploads and confirms the complete synthetic POs through the audited API, then separately records fictional vendor review decisions. It uploads the actual invoice, records the decision, verifies a correction where supplied, then tests duplicate and cumulative overage behavior. Fixture setup and its review provenance are saved alongside each case. No test invoice runs are added to your actual workspace.
 
-New runs write to a fresh `results/<mode>/<timestamp>/` directory. Use `--output /path/to/new-or-empty-directory` to choose another destination. The historical summaries linked below are preserved; reruns do not overwrite them. Provider-specific warnings, extracted fields, original decisions and corrected decisions remain in each run's results.
+New runs write to a fresh `results/<mode>/<timestamp>/` directory. Use `--output /path/to/new-or-empty-directory` to choose another destination. Historical runtime result files are not included in the published source; the observations above summarize the earlier evaluation. Reruns produce new evidence and do not overwrite earlier local runs. Provider-specific warnings, extracted fields, original decisions and corrected decisions remain in each new run's results.
 
-- [Live OpenRouter results](results/openrouter/summary.json)
-- [Local-only results](results/local/summary.json)
 - [Case manifest](manifest.json)
 - [Raw source transcriptions and uncertainties](handwritten-transcriptions.json)
 - [Printed source transcriptions](printed-transcriptions.json)
@@ -105,4 +103,4 @@ New runs write to a fresh `results/<mode>/<timestamp>/` directory. Use `--output
 - [Rillion handwritten invoice](https://www.rillion.com/finance-tools/automated-invoice-scanning-ocr-tool/): publicly provided hand-drawn demonstration. No explicit open asset license found.
 - [OCR.space handwritten receipt](https://ocr.space/handwriting): public OCR demonstration. No explicit open asset license found; it is a receipt, not an invoice.
 
-Downloads are retained locally for the requested evaluation. They have not been republished or hosted. [Printed provenance](printed-sources.json) and [handwritten provenance](handwritten-sources.json) record the exact source/download URLs, hashes and rights notes.
+The published source includes these public demonstration files as evaluation fixtures with the publisher attribution above. [Printed provenance](printed-sources.json) and [handwritten provenance](handwritten-sources.json) record the exact source/download URLs, hashes and rights notes. These fixtures are separate from the user's private manual invoices and workspace uploads, which are excluded from publication.

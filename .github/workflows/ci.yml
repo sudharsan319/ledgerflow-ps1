@@ -28,3 +28,5 @@ jobs:
       - run: ./scripts/test.sh
       - run: uv run python -m scripts.verify_submission
       - run: docker build -t ledgerflow-ci .
+      - name: Smoke-test hosted container
+        run: uv run python -m scripts.verify_container

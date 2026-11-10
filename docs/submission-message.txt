@@ -8,7 +8,7 @@ My submission is LedgerFlow, a runnable invoice-processing application with docu
 
 Live process: [INSERT VERIFIED RENDER APP URL]
 Five-minute demo video: [INSERT VIDEO LINK]
-Source code: [INSERT VERIFIED GITHUB REPOSITORY URL; PLANNED: https://github.com/sudharsan319/ledgerflow-ps1]
+Source code: https://github.com/sudharsan319/ledgerflow-ps1
 Reviewer access: [PROVIDE THE USERNAME AND PASSWORD PRIVATELY TO THE EVALUATOR]
 
 The walkthrough demonstrates a real PDF submission, duplicate detection and split invoices against one purchase order. I have also prepared ambiguous-PO and missing-field/incorrect-total cases for the live interview.
