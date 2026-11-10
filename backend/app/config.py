@@ -18,6 +18,7 @@ class Settings:
     max_file_bytes: int = 10 * 1024 * 1024
     queue_capacity: int = 100
     public_origin: str = ''
+    public_demo: bool = False
     auth_username: str = 'reviewer'
     auth_password: str = field(default='', repr=False)
 
@@ -27,9 +28,9 @@ class Settings:
             if (origin.scheme != 'https' or not origin.hostname or origin.username is not None or origin.password is not None
                     or origin.path not in ('', '/') or origin.query or origin.fragment):
                 raise ValueError('LEDGERFLOW_PUBLIC_ORIGIN must be an HTTPS origin without a path or credentials.')
-            if len(self.auth_password) < 20:
+            if not self.public_demo and len(self.auth_password) < 20:
                 raise ValueError('Hosted access requires LEDGERFLOW_AUTH_PASSWORD with at least 20 characters.')
-        if self.auth_password and (not self.auth_username or ':' in self.auth_username or not self.auth_username.isascii()):
+        if not self.public_demo and self.auth_password and (not self.auth_username or ':' in self.auth_username or not self.auth_username.isascii()):
             raise ValueError('LEDGERFLOW_AUTH_USERNAME must be nonempty ASCII text without a colon.')
 
     @classmethod
@@ -45,6 +46,7 @@ class Settings:
             openrouter_model=os.getenv('OPENROUTER_MODEL', 'openai/gpt-4o-mini'),
             enable_openrouter=os.getenv('ENABLE_OPENROUTER', 'false').lower() == 'true',
             public_origin=public_origin.rstrip('/'),
+            public_demo=os.getenv('LEDGERFLOW_PUBLIC_DEMO', 'false').strip().lower() == 'true',
             auth_username=os.getenv('LEDGERFLOW_AUTH_USERNAME', 'reviewer'),
             auth_password=os.getenv('LEDGERFLOW_AUTH_PASSWORD', ''),
         )

@@ -2,8 +2,12 @@
 
 ## Checks completed
 
-- Local full suite after the hosted-access changes: **439 Python tests passed**, **22 frontend tests passed**, TypeScript checks and Vite production build passed. One existing Starlette TestClient deprecation warning remains; no test failures.
-- Source published to [sudharsan319/ledgerflow-ps1](https://github.com/sudharsan319/ledgerflow-ps1), with the initial push at commit `4f67730`. Render deployment and cloud CI results have not yet been verified.
+- Local full suite after the initial hosted-access changes, before the public demo option: **439 Python tests passed**, **22 frontend tests passed**, TypeScript checks and Vite production build passed. One existing Starlette TestClient deprecation warning remains; no test failures.
+- Source published to [sudharsan319/ledgerflow-ps1](https://github.com/sudharsan319/ledgerflow-ps1), with the initial push at commit `4f67730`. The [GitHub CI run for `392d652`](https://github.com/sudharsan319/ledgerflow-ps1/actions/runs/42873493390) passed the full suite, production build, API rehearsal and protected Docker startup/PDF/duplicate checks. The Render service itself has not yet been verified.
+
+## Public demo configuration — 11 November 2026
+
+The opt-in `LEDGERFLOW_PUBLIC_DEMO=true` setting removes the password requirement for the shared workspace. Protected access remains the default; setting the flag to `false` restores login and requires a hosted password of at least 20 characters. See the [Render guide](render-deployment.md) for environment changes and deployment steps. Focused hosted-access and API verification passed **41 tests**, including passwordless PDF processing, retained origin/host restrictions, and the protected default. The Render service has not been changed through this workspace.
 
 ## Earlier local rehearsal evidence — 10 November 2026
 

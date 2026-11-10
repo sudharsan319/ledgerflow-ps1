@@ -24,7 +24,7 @@ def expect(response, status):
     return response
 
 
-def verify(api):
+def verify(api, public_demo=False):
     deadline = time.monotonic() + 90
     while True:
         try:
@@ -37,11 +37,12 @@ def verify(api):
         if time.monotonic() >= deadline:
             raise AssertionError('Container did not become healthy within 90 seconds')
         time.sleep(.5)
-    expect(api.get('/api/runs'), 401)
-    expect(api.get('/'), 401)
+    expected = 200 if public_demo else 401
+    expect(api.get('/api/runs'), expected)
+    expect(api.get('/'), expected)
 
 
-def verify_authenticated(api):
+def verify_workflow(api):
     home = expect(api.get('/'), 200)
     assert '<!doctype html>' in home.text.lower(), 'Built frontend was not served'
     assert expect(api.get('/api/runs'), 200).json() == {'runs': []}
@@ -76,6 +77,7 @@ def verify_authenticated(api):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', default='ledgerflow-ci')
+    parser.add_argument('--public-demo', action='store_true')
     args = parser.parse_args()
     name = 'ledgerflow-smoke-' + secrets.token_hex(6)
     password = secrets.token_urlsafe(32)
@@ -91,6 +93,7 @@ def main():
         docker('run', '--detach', '--name', name, '--publish', '127.0.0.1::8000',
                '--env', 'RENDER=true', '--env', f'RENDER_EXTERNAL_URL={ORIGIN}',
                '--env', 'LEDGERFLOW_AUTH_USERNAME=reviewer', '--env', 'LEDGERFLOW_AUTH_PASSWORD',
+               '--env', f'LEDGERFLOW_PUBLIC_DEMO={str(args.public_demo).lower()}',
                '--env', 'ENABLE_OPENROUTER=false', '--env', 'OPENROUTER_API_KEY=',
                args.image, env=environment, timeout=30)
         address = docker('port', name, '8000/tcp', timeout=10)
@@ -98,10 +101,12 @@ def main():
         assert host == '127.0.0.1' and port.isdigit(), 'Container port is not restricted to loopback'
         with httpx.Client(base_url=f'http://127.0.0.1:{port}', timeout=10, trust_env=False,
                           headers={'Host': 'ledgerflow-ci.example', 'Origin': ORIGIN}) as api:
-            verify(api)
-            api.auth = ('reviewer', password)
-            verify_authenticated(api)
-        print('Container smoke passed: hosted auth, frontend, PDF approval, JSON duplicate, source download; AI disabled.')
+            verify(api, args.public_demo)
+            if not args.public_demo:
+                api.auth = ('reviewer', password)
+            verify_workflow(api)
+        mode = 'public demo' if args.public_demo else 'hosted auth'
+        print(f'Container smoke passed: {mode}, frontend, PDF approval, JSON duplicate, source download; AI disabled.')
     finally:
         # Runs on failed assertions, startup errors, and normal CI cancellation signals.
         try:

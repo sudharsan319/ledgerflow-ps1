@@ -9,11 +9,11 @@ My submission is LedgerFlow, a runnable invoice-processing application with docu
 Live process: [INSERT VERIFIED RENDER APP URL]
 Five-minute demo video: [INSERT VIDEO LINK]
 Source code: https://github.com/sudharsan319/ledgerflow-ps1
-Reviewer access: [PROVIDE THE USERNAME AND PASSWORD PRIVATELY TO THE EVALUATOR]
+Reviewer access: [IF PROTECTED MODE IS ENABLED, PROVIDE CREDENTIALS PRIVATELY; PUBLIC DEMO MODE NEEDS NO LOGIN]
 
 The walkthrough demonstrates a real PDF submission, duplicate detection and split invoices against one purchase order. I have also prepared ambiguous-PO and missing-field/incorrect-total cases for the live interview.
 
-The repository includes local setup instructions, demo inputs, a process map and verification commands. The hosted demonstration requires reviewer credentials. Its Free-plan storage can reset after a service restart or idle shutdown; a fresh instance starts with fictional procurement records. Please allow the service time to wake before the walkthrough.
+The repository includes local setup instructions, demo inputs, a process map and verification commands. The hosted demonstration supports protected reviewer access or an explicitly enabled public demo without a password. Its Free-plan storage can reset after a service restart or idle shutdown; a fresh instance starts with fictional procurement records. Please allow the service time to wake before the walkthrough.
 
 Regards,
 [Your Name]

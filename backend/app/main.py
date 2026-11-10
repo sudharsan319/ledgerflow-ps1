@@ -144,7 +144,7 @@ def create_app(settings: Settings | None = None):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['X-Frame-Options'] = 'DENY'
-        if config.auth_password or request.url.path.startswith('/api'):
+        if config.public_origin or config.auth_password or request.url.path.startswith('/api'):
             response.headers['Cache-Control'] = 'no-store'
         return response
 

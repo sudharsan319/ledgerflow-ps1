@@ -1,5 +1,7 @@
 import base64
 from dataclasses import replace
+from pathlib import Path
+import time
 
 import pytest
 from fastapi.testclient import TestClient
@@ -84,3 +86,58 @@ def test_local_workspace_does_not_require_hosted_credentials(tmp_path):
         assert client.get('/api/runs').status_code == 200
         assert client.post('/api/demo/happy_path', headers={'Origin': 'http://localhost:8000'}).status_code == 202
         assert client.post('/api/demo/happy_path', headers={'Origin': 'https://evil.example'}).status_code == 403
+
+
+def test_public_demo_requires_explicit_environment_opt_in(tmp_path, monkeypatch):
+    monkeypatch.setenv('LEDGERFLOW_DATA_DIR', str(tmp_path))
+    monkeypatch.setenv('LEDGERFLOW_PUBLIC_ORIGIN', ORIGIN)
+    monkeypatch.setenv('LEDGERFLOW_AUTH_PASSWORD', PASSWORD)
+    monkeypatch.delenv('LEDGERFLOW_PUBLIC_DEMO', raising=False)
+    protected = Settings.from_env()
+    assert protected.public_demo is False
+    with TestClient(create_app(protected), base_url=ORIGIN) as client:
+        assert client.get('/api/runs').status_code == 401
+
+    monkeypatch.setenv('LEDGERFLOW_AUTH_PASSWORD', '')
+    for value in ('false', 'yes'):
+        monkeypatch.setenv('LEDGERFLOW_PUBLIC_DEMO', value)
+        with pytest.raises(ValueError, match='LEDGERFLOW_AUTH_PASSWORD'):
+            Settings.from_env()
+    monkeypatch.setenv('LEDGERFLOW_PUBLIC_DEMO', 'true')
+    assert Settings.from_env().public_demo is True
+    with pytest.raises(ValueError, match='HTTPS origin'):
+        Settings(data_dir=tmp_path, public_origin='http://demo.example', public_demo=True)
+
+
+@pytest.mark.parametrize('password', ['', PASSWORD])
+def test_public_demo_opens_hosted_pages_even_with_existing_password(tmp_path, password):
+    settings = Settings(data_dir=tmp_path, public_origin=ORIGIN, public_demo=True, auth_password=password)
+    with TestClient(create_app(settings), base_url=ORIGIN) as client:
+        for path in ('/', '/api/runs'):
+            response = client.get(path)
+            assert response.status_code == 200
+            assert 'www-authenticate' not in response.headers
+            assert response.headers['cache-control'] == 'no-store'
+        assert client.get('/api/runs', headers={'Host': 'attacker.example'}).status_code == 400
+
+
+def test_public_demo_real_upload_works_without_login_but_rejects_other_origins(tmp_path):
+    settings = Settings(data_dir=tmp_path, public_origin=ORIGIN, public_demo=True)
+    pdf = (Path(__file__).resolve().parents[1] / 'samples' / '01-clean-invoice.pdf').read_bytes()
+    with TestClient(create_app(settings), base_url=ORIGIN) as client:
+        files = {'files': ('01-clean-invoice.pdf', pdf, 'application/pdf')}
+        assert client.post('/api/runs/upload', files=files, headers={'Origin': 'https://evil.example'}).status_code == 403
+        assert client.get('/api/runs').json() == {'runs': []}
+        response = client.post('/api/runs/upload', files=files, headers={'Origin': ORIGIN})
+        assert response.status_code == 202, response.text
+        run_id = response.json()['runs'][0]['id']
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline:
+            run = client.get(f'/api/runs/{run_id}').json()
+            if run['status'] in ('completed', 'failed'):
+                break
+            time.sleep(.02)
+        assert run['status'] == 'completed'
+        assert run['decision'] == 'approved'
+        source = client.get(f'/api/runs/{run_id}/source')
+        assert source.status_code == 200 and source.content == pdf

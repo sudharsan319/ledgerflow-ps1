@@ -8,9 +8,9 @@ from fastapi.responses import JSONResponse
 
 
 def access_error(request, config):
-    # Only this minimal endpoint is public; records, sources and API docs are not.
+    # Login is the default; public demo access requires an explicit configuration flag.
     probe = request.url.path == '/healthz' and request.method in ('GET', 'HEAD')
-    if config.auth_password and not probe:
+    if config.auth_password and not config.public_demo and not probe:
         valid = False
         scheme, _, encoded = request.headers.get('authorization', '').partition(' ')
         if scheme.casefold() == 'basic':

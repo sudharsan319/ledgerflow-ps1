@@ -2,7 +2,7 @@
 
 A runnable invoice-processing application for the ASA PS-1 case study. It accepts real documents, extracts invoice fields, checks procurement rules, and records an explainable **approved**, **needs review**, or **rejected** decision. Approval reserves PO capacity; it never executes payment.
 
-The React interface includes a dashboard, live run stages, searchable history, extraction evidence, human review/correction, multi-format PO uploads, independent vendor review, policy settings, and downloadable decision reports. The backend is Python/FastAPI with SQLite and a bounded worker queue. Run it locally or use the included Render deployment configuration with a shared reviewer login.
+The React interface includes a dashboard, live run stages, searchable history, extraction evidence, human review/correction, multi-format PO uploads, independent vendor review, policy settings, and downloadable decision reports. The backend is Python/FastAPI with SQLite and a bounded worker queue. Run it locally or use the included Render deployment configuration with a shared reviewer login by default and an optional public demo mode.
 
 Submission materials: [checklist and coverage](SUBMISSION.md), [five-minute narration](docs/demo-narration.md), and [demo preparation](docs/demo.md). For a fresh recording workspace, run `./scripts/start-demo.sh` and open `http://127.0.0.1:8001`. Your regular database is preserved.
 
@@ -44,7 +44,9 @@ npm --prefix frontend run dev
 
 The included `render.yaml` defines one Docker web service on Render's Free plan. Follow the [Render deployment guide](docs/render-deployment.md) for setup, reviewer credentials and verification. It starts with fictional procurement records; the local database, uploaded documents and `.env` are excluded from the deployment image and source package. This configuration is provided for deployment; it does not imply that a live service has already been created.
 
-Hosted access requires the username `reviewer` and a generated secret password. Share the credentials privately with the evaluator. Only `/healthz` is public. Free-plan storage is temporary: uploaded files and run history can reset after a restart, redeployment or idle shutdown. The service may also need time to wake before a demonstration. OpenRouter is disabled by default; configure its key in Render's secret environment settings if needed.
+Hosted access requires the username `reviewer` and a generated secret password by default; only `/healthz` is public. To allow a demonstration without a password, set `LEDGERFLOW_PUBLIC_DEMO=true` in the Render service's Environment settings, save, then rebuild and deploy the latest GitHub commit. Existing username/password settings may remain; they are ignored while this flag is true. Set it to `false` to restore the login, with `LEDGERFLOW_AUTH_PASSWORD` set to at least 20 characters. Share those credentials privately when using protected access.
+
+Public demo mode shares one workspace: anyone with access to the app can view uploaded documents and edit invoice/procurement records. Use fictional samples and keep `ENABLE_OPENROUTER=false` for a public demonstration. If AI extraction is enabled, visitors' requests use the owner's configured OpenRouter key. Free-plan storage is temporary: uploaded files and run history can reset after a restart, redeployment or idle shutdown. The service may also need time to wake before a demonstration.
 
 ## Optional OpenRouter extraction
 
@@ -155,7 +157,7 @@ Tests exercise extraction, malformed/provider inputs, monetary normalization, bu
 
 All local records and original inputs live under `data/` (or `LEDGERFLOW_DATA_DIR`), ignored by Git. Keep that directory private and back it up as a unit while the service is stopped. To start fresh, stop the app and move the data directory aside; the next start seeds a clean database. No deletion/reset endpoint is exposed.
 
-This is a complete single-workspace case-study application, not a production multi-tenant AP system. Reviewer names are self-attested audit labels. Local startup binds to loopback; the hosted configuration requires a shared reviewer login and explicitly trusts the assigned Render origin. Unexpected Host/Origin values are rejected. Production operation would additionally require individual authentication and authorization, tenant isolation, a durable external queue, malware scanning/sandboxing for untrusted documents, retention controls and operational monitoring. Startup recovery marks interrupted runs failed, making resubmission explicit. Procurement is an imported snapshot rather than a live ERP connector. Vendor approval is an operator decision. Bank verification, goods receipts, tax compliance and sending payments are not implemented.
+This is a complete single-workspace case-study application, not a production multi-tenant AP system. Reviewer names are self-attested audit labels. Local startup binds to loopback; the hosted configuration uses a shared reviewer login unless public demo mode is explicitly enabled. Both hosted modes explicitly trust the assigned Render origin and reject unexpected Host/Origin values. Production operation would additionally require individual authentication and authorization, tenant isolation, a durable external queue, malware scanning/sandboxing for untrusted documents, retention controls and operational monitoring. Startup recovery marks interrupted runs failed, making resubmission explicit. Procurement is an imported snapshot rather than a live ERP connector. Vendor approval is an operator decision. Bank verification, goods receipts, tax compliance and sending payments are not implemented.
 
 ### Live PO product checks
 
