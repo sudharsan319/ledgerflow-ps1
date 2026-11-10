@@ -26,6 +26,7 @@ from .calculation_api import calculation_router
 from .invoice_review import review_router, correction_invoice, field_changes
 from .models import invoice_fingerprint
 from .access import access_error
+from .invoice_deletion import deletion_router
 
 SUPPORTED = {'.pdf', '.png', '.jpg', '.jpeg', '.webp', '.tif', '.tiff', '.json', '.csv', '.txt', '.md', '.eml'}
 SCENARIOS = [
@@ -123,6 +124,7 @@ def create_app(settings: Settings | None = None):
     app.include_router(document_router(store, config))
     app.include_router(calculation_router(store, config))
     app.include_router(review_router(store))
+    app.include_router(deletion_router(store, pipeline, config))
     from urllib.parse import urlsplit
     allowed_hosts = ['localhost', '127.0.0.1', '[::1]', 'testserver']
     if config.public_origin:

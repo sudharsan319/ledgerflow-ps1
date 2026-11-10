@@ -213,3 +213,16 @@
 .sample-runs .quick-copy h3{font-size:13px;font-weight:600;margin-bottom:15px}
 .settings-row strong,.settings-row code{overflow-wrap:anywhere;min-width:0;text-align:right}
 .po-template-links>span{font-size:11px;color:var(--muted);margin-right:8px}
+
+.run-row-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.invoice-open-button{padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.invoice-open-button:focus-visible{outline:2px solid #6b8957;outline-offset:4px;border-radius:2px}
+.invoice-delete-action{color:#9c4a3c}
+.invoice-delete-action:hover:not(:disabled){background:#fff0ea;color:#842f24}
+.invoice-delete-modal{max-width:560px}
+.invoice-delete-body{padding:22px 26px;display:grid;gap:16px;overflow:auto}
+.invoice-delete-body p{margin:0;line-height:1.6;font-size:13px}
+.invoice-delete-files{margin:0;padding:12px 12px 12px 30px;border:1px solid var(--border);border-radius:8px;background:#fafbf8;max-height:180px;overflow:auto;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.invoice-delete-impact{color:#8d5034}
+.invoice-delete-body>.button{justify-self:start}
+.invoice-delete-modal .modal-footer{justify-content:flex-end}

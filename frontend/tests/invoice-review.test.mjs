@@ -327,3 +327,55 @@ test('PO review shows cumulative invoice quantities without claiming goods were 
   assert.ok(pending.includes('Checking the current PO'));
   assert.ok(!pending.includes('PO-PARTIAL'));
 });
+
+const deletionBundle = await build({ entryPoints: [new URL('../src/invoiceDeletion.ts', import.meta.url).pathname], bundle: true, write: false, format: 'esm', platform: 'node' });
+const { loadDeletionPreview, deleteInvoiceUpload } = await import(`data:text/javascript;base64,${Buffer.from(deletionBundle.outputFiles[0].text).toString('base64')}`);
+const confirmationBundle = await build({ entryPoints: [new URL('../src/DeleteInvoiceDialog.tsx', import.meta.url).pathname], bundle: true, write: false, format: 'cjs', platform: 'node', jsx: 'automatic', external: ['react', 'react/jsx-runtime'] });
+const confirmationModule = { exports: {} };
+new Function('require', 'module', 'exports', confirmationBundle.outputFiles[0].text)(createRequire(import.meta.url), confirmationModule, confirmationModule.exports);
+const deletionPreview = { run_ids: ['upload-1', 'correction-1'], count: 2, filenames: ['invoice.pdf', 'corrected-invoice.json'], approved_count: 1, can_delete: true, reason: null, fingerprint: 'reviewed-upload-version' };
+
+test('upload deletion confirmation shows its related records and PO impact', () => {
+  const html = renderToStaticMarkup(createElement(confirmationModule.exports.DeleteInvoiceConfirmation, { preview: deletionPreview, busy: false, onConfirm: noOp }));
+  assert.match(html, /2 processing records/);
+  assert.match(html, /invoice\.pdf/);
+  assert.match(html, /corrected-invoice\.json/);
+  assert.match(html, /batch invoices and corrected versions/);
+  assert.match(html, /1 approved invoice will be released/);
+  assert.match(html, /cannot be undone/);
+  assert.match(html, /Delete upload permanently/);
+  const blocked = renderToStaticMarkup(createElement(confirmationModule.exports.DeleteInvoiceConfirmation, { preview: { ...deletionPreview, can_delete: false, reason: 'Wait for processing to finish.' }, busy: false, onConfirm: noOp }));
+  assert.match(blocked, /Wait for processing to finish/);
+  assert.match(blocked, /<button[^>]*disabled=""/);
+  const busy = renderToStaticMarkup(createElement(confirmationModule.exports.DeleteInvoiceConfirmation, { preview: deletionPreview, busy: true, onConfirm: noOp }));
+  assert.match(busy, /<button[^>]*disabled=""/);
+});
+
+test('deletion requires a matching reviewed preview and sends its fingerprint', async t => {
+  const calls = [];
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    calls.push({ url, options });
+    return Response.json(options?.method === 'DELETE' ? { deleted_run_ids: deletionPreview.run_ids, count: 2 } : deletionPreview);
+  });
+  const preview = await loadDeletionPreview('upload-1');
+  assert.equal(calls[0].url, '/api/runs/upload-1/deletion-preview');
+  assert.equal(calls.length, 1); // Loading the dialog is read-only.
+  const result = await deleteInvoiceUpload('upload-1', preview);
+  assert.equal(calls[1].url, '/api/runs/upload-1');
+  assert.equal(calls[1].options.method, 'DELETE');
+  assert.deepEqual(JSON.parse(calls[1].options.body), { expected_fingerprint: preview.fingerprint });
+  assert.deepEqual(result.deleted_run_ids, ['upload-1', 'correction-1']);
+  await assert.rejects(deleteInvoiceUpload('another-upload', preview), /latest deletion details/);
+  await assert.rejects(deleteInvoiceUpload('upload-1', { ...preview, can_delete: false, reason: 'Still processing.' }), /Still processing/);
+  assert.equal(calls.length, 2);
+});
+
+test('a stale deletion confirmation reports the conflict without retrying the deletion', async t => {
+  let requests = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    requests++;
+    return Response.json({ detail: 'Upload changed. Review the deletion details again.' }, { status: 409 });
+  });
+  await assert.rejects(deleteInvoiceUpload('upload-1', deletionPreview), /Review the deletion details again/);
+  assert.equal(requests, 1);
+});

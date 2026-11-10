@@ -27,6 +27,8 @@ class Pipeline:
         self.store, self.settings = store, settings
         self.queue = queue.Queue(maxsize=settings.queue_capacity)
         self.lock = threading.Lock()
+        # A batch root can be completed before its remaining rows are saved.
+        self.active_run_ids = set()
         self.stopping = threading.Event()
         self.thread = threading.Thread(target=self._work, name='ledgerflow-worker', daemon=True)
 
@@ -72,6 +74,8 @@ class Pipeline:
                 run_id, content = self.queue.get(timeout=0.2)
             except queue.Empty:
                 continue
+            with self.lock:
+                self.active_run_ids.add(run_id)
             try:
                 self.process(run_id, content)
             except Exception:
@@ -82,6 +86,8 @@ class Pipeline:
                     run.update(status='failed', error='An unexpected processing error occurred. Check the input and retry.')
                     self._event(run, 'output', 'failed', run['error'])
             finally:
+                with self.lock:
+                    self.active_run_ids.discard(run_id)
                 self.queue.task_done()
 
     def process(self, run_id, content):

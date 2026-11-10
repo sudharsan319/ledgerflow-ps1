@@ -72,6 +72,20 @@ def verify_workflow(api):
     assert duplicate['result']['duplicate_of'] == happy['id'], 'Duplicate did not reference the PDF run'
     assert any(check['code'] == 'duplicate' and check['status'] == 'fail'
                for check in duplicate['result']['checks']), 'Duplicate policy check did not fail'
+    preview = expect(api.get(f'/api/runs/{happy["id"]}/deletion-preview'), 200).json()
+    assert preview['can_delete'] and preview['count'] == 1 and preview['approved_count'] == 1
+    deleted = expect(api.request('DELETE', f'/api/runs/{happy["id"]}',
+                                json={'expected_fingerprint': preview['fingerprint']}), 200).json()
+    assert deleted['deleted_run_ids'] == [happy['id']] and deleted['count'] == 1
+    expect(api.get(f'/api/runs/{happy["id"]}/source'), 404)
+    remaining = expect(api.get('/api/runs'), 200).json()['runs']
+    assert len(remaining) == 1 and remaining[0]['id'] == duplicate['id']
+    assert remaining[0]['result']['duplicate_source_deleted'] is True
+    po = next(p for p in expect(api.get('/api/procurement'), 200).json()['purchase_orders']
+              if p['po_number'] == 'PO-2026-001')
+    assert po['committed'] == '0' and all(line['invoiced_quantity'] == '0' for line in po['line_commitments'])
+    uploaded_again, _ = upload('01-clean-invoice.pdf')
+    assert uploaded_again['decision'] == 'approved', 'Deleted invoice still blocked a fresh upload'
 
 
 def main():
@@ -106,7 +120,7 @@ def main():
                 api.auth = ('reviewer', password)
             verify_workflow(api)
         mode = 'public demo' if args.public_demo else 'hosted auth'
-        print(f'Container smoke passed: {mode}, frontend, PDF approval, JSON duplicate, source download; AI disabled.')
+        print(f'Container smoke passed: {mode}, PDF approval, duplicate, source download, deletion, PO release, re-upload; AI disabled.')
     finally:
         # Runs on failed assertions, startup errors, and normal CI cancellation signals.
         try:

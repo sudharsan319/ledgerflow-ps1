@@ -37,6 +37,7 @@ class Store:
             CREATE TABLE IF NOT EXISTS settings (id TEXT PRIMARY KEY, data TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS po_uploads (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, data TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS procurement_audit (id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT NOT NULL, data TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS invoice_deletions (id TEXT PRIMARY KEY, at TEXT NOT NULL, data TEXT NOT NULL);
             ''')
             if not conn.execute("SELECT 1 FROM settings WHERE id='initialized'").fetchone():
                 for item in SEED_VENDORS:

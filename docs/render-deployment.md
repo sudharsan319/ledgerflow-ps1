@@ -20,7 +20,7 @@ Public demo mode is optional; protected access remains the default. To enable it
 
 Existing `LEDGERFLOW_AUTH_USERNAME` and `LEDGERFLOW_AUTH_PASSWORD` settings may remain in Render; they are ignored while `LEDGERFLOW_PUBLIC_DEMO=true`. To restore protected access, set the flag to `false`, ensure the password has at least 20 characters, and save and redeploy.
 
-This makes the same shared workspace available to everyone who can reach the app. Visitors can view uploaded documents and edit invoices, vendors and purchase orders. Use fictional samples and keep `ENABLE_OPENROUTER=false` for the public demonstration. If AI extraction is enabled, visitors' extraction requests use the owner's configured OpenRouter key.
+This makes the same shared workspace available to everyone who can reach the app. Visitors can view uploaded documents, edit invoices, vendors and purchase orders, and delete invoice uploads after confirmation. Use fictional samples and keep `ENABLE_OPENROUTER=false` for the public demonstration. If AI extraction is enabled, visitors' extraction requests use the owner's configured OpenRouter key.
 
 These are configuration instructions, not confirmation that any Render service has been changed or verified.
 

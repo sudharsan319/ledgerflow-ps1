@@ -9,6 +9,13 @@
 
 The opt-in `LEDGERFLOW_PUBLIC_DEMO=true` setting removes the password requirement for the shared workspace. Protected access remains the default; setting the flag to `false` restores login and requires a hosted password of at least 20 characters. See the [Render guide](render-deployment.md) for environment changes and deployment steps. Focused hosted-access and API verification passed **41 tests**, including passwordless PDF processing, retained origin/host restrictions, and the protected default. The Render service has not been changed through this workspace.
 
+## Invoice upload deletion — 11 November 2026
+
+- Full local suite: **456 Python tests passed**, **25 frontend tests passed**, and TypeScript/Vite production build passed. One existing Starlette deprecation warning remains.
+- Deletion checks cover approved PO amount/quantity release, batch and correction families, unrelated invoice/PO source preservation, stale previews, active batches, duplicate history, re-upload, protected/public access, and source rollback/recovery.
+- Local rehearsal server on port 8001 was refreshed with the same data directory. Its two existing runs and source files matched the pre-restart fingerprint; no existing invoices were deleted. The new read-only deletion preview and rebuilt frontend were verified.
+- GitHub container checks exercise deletion, released PO commitments and re-upload in both protected and public demo modes. Their remote result is reported by the linked repository Actions run after publishing.
+
 ## Earlier local rehearsal evidence — 10 November 2026
 
 The following checks were recorded before the hosted-access changes. They document the local rehearsal and source-package verification at that time; they do not establish that a Render deployment is live.
