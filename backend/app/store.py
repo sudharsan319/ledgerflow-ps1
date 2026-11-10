@@ -11,7 +11,7 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 
-DEFAULT_POLICY = {'tolerance_percent': '2', 'tolerance_absolute': '5', 'min_confidence': 0.85}
+DEFAULT_POLICY = {'tolerance_percent': '2', 'tolerance_absolute': '5', 'min_confidence': 0.75}
 SEED_VENDORS = [
     {'id': 'vendor-acme', 'name': 'Acme Cloud Services', 'aliases': ['Acme Cloud', 'Acme Cloud Services Ltd'], 'approved': True},
     {'id': 'vendor-northstar', 'name': 'Northstar Office Supply', 'aliases': ['Northstar'], 'approved': True},
@@ -48,6 +48,16 @@ class Store:
                     conn.execute('INSERT OR IGNORE INTO purchase_orders VALUES (?,?)', (item['po_number'], json.dumps(item)))
                 conn.execute('INSERT OR IGNORE INTO settings VALUES (?,?)', ('policy', json.dumps(DEFAULT_POLICY)))
                 conn.execute('INSERT INTO settings VALUES (?,?)', ('initialized', 'true'))
+            # Move an existing database off the previous default once. Keep
+            # other chosen thresholds and allow later policy edits to persist.
+            if not conn.execute("SELECT 1 FROM settings WHERE id='confidence_threshold_075_migrated'").fetchone():
+                row = conn.execute("SELECT data FROM settings WHERE id='policy'").fetchone()
+                if row:
+                    policy = json.loads(row[0])
+                    if policy.get('min_confidence') in (0.85, '0.85'):
+                        policy['min_confidence'] = 0.75
+                        conn.execute("UPDATE settings SET data=? WHERE id='policy'", (json.dumps(policy),))
+                conn.execute('INSERT INTO settings VALUES (?,?)', ('confidence_threshold_075_migrated', 'true'))
 
     @contextmanager
     def connection(self, write=False):

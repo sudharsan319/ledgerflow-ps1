@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 
 from backend.app.config import Settings
 from backend.app.main import create_app
+from backend.app.store import Store
 
 
 @pytest.fixture
@@ -148,8 +149,26 @@ def test_config_limits_and_origin_boundary(client):
     assert 'openrouter_api_key' not in client.get('/api/health').text
     assert client.put('/api/policy', json={'tolerance_percent': '-1'}).status_code == 422
     assert client.put('/api/policy', json={'min_confidence': .1}).status_code == 422
+    assert client.put('/api/policy', json={'min_confidence': .74}).status_code == 422
+    assert client.put('/api/policy', json={'min_confidence': .75}).status_code == 200
+    assert client.get('/api/procurement').json()['policy']['min_confidence'] == .75
     assert client.post('/api/demo/happy_path', headers={'Origin': 'https://evil.example'}).status_code == 403
     assert client.get('/api/runs/not-present').status_code == 404
+
+
+def test_existing_default_confidence_migrates_once(tmp_path):
+    path = tmp_path / 'ledgerflow.sqlite3'
+    store = Store(path)
+    with store.connection(write=True) as conn:
+        old_policy = {**store.procurement(conn)['policy'], 'min_confidence': .85}
+        conn.execute("UPDATE settings SET data=? WHERE id='policy'", (json.dumps(old_policy),))
+        conn.execute("DELETE FROM settings WHERE id='confidence_threshold_075_migrated'")
+    migrated = Store(path)
+    assert migrated.procurement()['policy']['min_confidence'] == .75
+    with migrated.connection(write=True) as conn:
+        chosen_policy = {**migrated.procurement(conn)['policy'], 'min_confidence': .85}
+        conn.execute("UPDATE settings SET data=? WHERE id='policy'", (json.dumps(chosen_policy),))
+    assert Store(path).procurement()['policy']['min_confidence'] == .85
 
 
 def test_restart_recovery(tmp_path):

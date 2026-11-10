@@ -133,7 +133,7 @@ PO amounts are **gross invoice totals including tax**, in the PO's currency. No 
 
 A review approval re-runs the rules inside the same SQLite write transaction that records the commitment. It cannot override duplicates, arithmetic errors, unapproved vendors, missing PO validation/authorization, or overspending. A reviewer can resolve PO ambiguity by selecting a valid PO. **Correct & reprocess** preserves the original record and source, records the reviewer and reason, supersedes the original, and evaluates a new run. Correcting an approved invoice first requires rejecting it so its commitment is explicitly released.
 
-Extraction confidence is a conservative routing heuristic, not a calibrated probability. Structured transport scores 1 because it is read losslessly, not because the invoice is intrinsically correct. OCR/vision-only extraction remains below the automatic approval threshold. Human-verified corrections are structured input and still pass every financial control.
+Extraction confidence is a conservative routing heuristic, not a calibrated probability. The default minimum is 0.75. Structured transport scores 1 because it is read losslessly, not because the invoice is intrinsically correct. OCR/vision extraction may meet the confidence threshold, but source evidence and every financial policy check still apply. Human-verified corrections are structured input and still pass every financial control.
 
 ## Demo and procurement data
 

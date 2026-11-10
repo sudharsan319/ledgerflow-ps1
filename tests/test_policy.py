@@ -174,6 +174,14 @@ def test_low_model_confidence_requires_review_despite_correct_amounts():
     assert rule(result, "extraction_confidence")["blocking"] is True
 
 
+def test_default_confidence_threshold_is_075():
+    at_threshold = run(invoice(extraction_method="openrouter", extraction_confidence=0.75))
+    below_threshold = run(invoice(extraction_method="openrouter", extraction_confidence=0.74))
+    assert rule(at_threshold, "extraction_confidence")["status"] == "pass"
+    assert rule(below_threshold, "extraction_confidence")["blocking"] is True
+    assert "0.75" in rule(below_threshold, "extraction_confidence")["message"]
+
+
 def test_model_self_reported_confidence_requires_source_evidence():
     result = run(invoice(extraction_method="openrouter", extraction_confidence=1))
     assert rule(result, "extraction_evidence")["blocking"] is True

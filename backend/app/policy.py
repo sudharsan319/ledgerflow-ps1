@@ -16,7 +16,7 @@ from .po_matching import reconcile_po
 DEFAULT_POLICY = {
     "tolerance_percent": "2",
     "tolerance_absolute": "5",
-    "min_confidence": 0.85,
+    "min_confidence": 0.75,
 }
 
 
@@ -75,7 +75,7 @@ def evaluate_invoice(invoice: dict, vendors: list[dict], purchase_orders: list[d
     trusted_structured = method in {"structured", "json", "csv", "form", "manual", "structured_json", "structured_csv"}
     if min_confidence is None or not 0 <= min_confidence <= 1:
         check("policy_config", "Policy configuration", "fail", "Minimum confidence must be between 0 and 1.", True)
-        min_confidence = Decimal("0.85")
+        min_confidence = Decimal("0.75")
     if confidence is None and trusted_structured:
         confidence = Decimal(1)
     if confidence is None or confidence < min_confidence or confidence > 1:

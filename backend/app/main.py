@@ -78,7 +78,7 @@ class CorrectionInput(BaseModel):
 class PolicyInput(BaseModel):
     tolerance_percent: str = '2'
     tolerance_absolute: str = '5'
-    min_confidence: float = Field(default=0.85, ge=0.85, le=1)
+    min_confidence: float = Field(default=0.75, ge=0.75, le=1)
 
     @field_validator('tolerance_percent', 'tolerance_absolute')
     @classmethod
