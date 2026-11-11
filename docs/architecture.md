@@ -10,9 +10,9 @@ Invoice input (PDF / PNG / JPEG / JSON / CSV / text)
 → approved / needs_review / rejected, with rule-by-rule explanation
 → durable history, review audit trail, JSON / CSV / printable HTML outputs.
 
-The Python/FastAPI service owns SQLite persistence, a bounded worker queue, input parsing, optional model access, and deterministic policy. The React UI shows actual persisted stage events and run history. OpenRouter only extracts data; it cannot approve invoices, authorize POs, approve vendors, or call actions. Local structured inputs work without an API key. Free-form documents use a conservative parser and optional local OCR, or OpenRouter when explicitly configured on the server.
+The Python/FastAPI service owns SQLite persistence locally or PostgreSQL persistence when `DATABASE_URL` is configured, a bounded worker queue, input parsing, optional model access, and deterministic policy. The React UI shows actual persisted stage events and run history. OpenRouter only extracts data; it cannot approve invoices, authorize POs, approve vendors, or call actions. Local structured inputs work without an API key. Free-form documents use a conservative parser and optional local OCR, or OpenRouter when explicitly configured on the server.
 
-The runtime is a single process with SQLite and bounded invoice and PO extraction queues, each with one worker. Decision and PO reservation are one serialized database transaction. Restart recovery marks unfinished runs and PO uploads failed, so interrupted work is visible. Approval creates a commitment, not a payment; human rejection releases a commitment. Manual approval cannot bypass hard policy blocks.
+The runtime is a single process with SQLite or PostgreSQL and bounded invoice and PO extraction queues, each with one worker. Decision and PO reservation are one serialized database transaction. Restart recovery marks unfinished runs and PO uploads failed, so interrupted work is visible. Approval creates a commitment, not a payment; human rejection releases a commitment. Manual approval cannot bypass hard policy blocks.
 
 ## Purchase-order intake and independent vendor review
 

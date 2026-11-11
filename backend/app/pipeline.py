@@ -53,11 +53,7 @@ class Pipeline:
             return runs
 
     def save_source(self, run_id, content):
-        directory = self.settings.data_dir / 'sources'
-        directory.mkdir(parents=True, exist_ok=True)
-        path = directory / f'{run_id}.bin'
-        path.write_bytes(content)
-        path.chmod(0o600)
+        self.store.save_source('sources', run_id, content)
 
     def _event(self, run, stage, status, message):
         # One entry per stage, updated from running to its actual completion status.

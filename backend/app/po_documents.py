@@ -18,7 +18,7 @@ class PODocuments:
             identifier = str(UUID(str(upload['id'])))
         except (ValueError, TypeError, KeyError, AttributeError):
             return False
-        return (self.settings.data_dir / 'po-sources' / f'{identifier}.bin').is_file()
+        return self.store.has_source('po-sources', identifier)
 
     @staticmethod
     def source_info(upload, role):

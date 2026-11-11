@@ -24,11 +24,20 @@ This makes the same shared workspace available to everyone who can reach the app
 
 These are configuration instructions, not confirmation that any Render service has been changed or verified.
 
-## Data and cost
+## Persistent uploads on Render Free
 
-The Free plan does not have a persistent disk. SQLite records and uploaded files can be lost when the instance restarts, redeploys or spins down. Fictional starter procurement records are recreated after that reset. Use this service for the demonstration, not durable AP operations. The free instance can take about a minute to wake after an idle period; open it before recording or the interview. See [Render's free-plan documentation](https://render.com/docs/free).
+Render Free erases its local filesystem after a restart, redeploy or idle shutdown. Without `DATABASE_URL`, this includes the SQLite database, invoice originals and uploaded PO files. Fictional starter records then reappear in a fresh database. See [Render's free-plan documentation](https://render.com/docs/free).
 
-For durable history, explicitly choose a paid service and mount a persistent disk at `/app/data`, or implement an external database and file store. No paid resources are included in this Blueprint.
+To retain records and source documents on a Free web service, use an external PostgreSQL database. A Neon Free project is suitable for a small demonstration; its database quota also counts the uploaded document bytes.
+
+1. Create a Neon project and copy its **pooled PostgreSQL connection string**, including SSL settings.
+2. In the Render service's **Environment** page, set `DATABASE_URL` to that string as a secret. Never add a real connection string to GitHub or `render.yaml`.
+3. Redeploy. In the app's **Settings**, verify **Upload storage: External database**. The authenticated `/api/health` endpoint also reports `storage_mode: postgres`.
+4. Upload a new invoice and PO, record their identifiers, redeploy once more, and check that both history entries and source previews remain available.
+
+With `DATABASE_URL`, records and original invoice/PO bytes live in PostgreSQL. Files under `/app/data` are disposable preview caches. Data already lost from the old temporary Render instance cannot be recovered by adding the URL; reupload the files or restore an independent backup. Back up important data separately. If **Upload storage** still says **Local files**, uploads can still disappear.
+
+The alternative is a paid Render web service with a persistent disk mounted at `/app/data`, which retains both local SQLite and sources. No paid resources are included in this Blueprint. The Free instance can take about a minute to wake after an idle period.
 
 ## Optional AI extraction
 

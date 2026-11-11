@@ -138,6 +138,7 @@ def deletion_router(store, pipeline, settings):
                     deleted = set(snapshot['run_ids'])
                     folder = sources.stage(deletion_id, snapshot['run_ids'])
                     conn.executemany('DELETE FROM runs WHERE id=?', [(key,) for key in snapshot['run_ids']])
+                    store.delete_sources('sources', snapshot['run_ids'], conn)
                     for run in runs:
                         if run['id'] in deleted:
                             continue

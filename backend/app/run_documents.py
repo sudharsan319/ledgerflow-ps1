@@ -25,8 +25,7 @@ def document_router(store, settings):
             identifier = str(UUID(str(source_id)))
         except (ValueError, TypeError, AttributeError):
             return None
-        path = settings.data_dir / directory / f'{identifier}.bin'
-        return path if path.is_file() else None
+        return store.source_path(directory, identifier)
 
     def run_source(run, *, original=False):
         visited = set()

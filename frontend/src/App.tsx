@@ -18,7 +18,7 @@ type Policy = { tolerance_percent: string; tolerance_absolute: string; min_confi
 type CheckResult = {code: string; label: string; status: string; message: string; blocking: boolean};
 type Run = {id: string; filename: string; status: string; decision: string | null; created_at: string; updated_at: string; invoice: Invoice | null; events: {stage: string; status: string; message: string; at: string}[]; result: null | {decision: string; summary: string; checks: CheckResult[]; matched_po: PO | null; matched_vendor: Vendor | null; duplicate_of: string | null; duplicate_source_deleted?: boolean}; extraction: null | {method: string; evidence: Record<string, unknown>; warnings: string[]; raw_text: string}; error: string | null; reviews: {action: string; reviewer: string; comment: string; at: string; changes?: FieldChange[]}[]; source_sha256: string; superseded_by?: string | null; correction_of?: string | null};
 type Dashboard = {total_runs: number; approved: number; needs_review: number; rejected: number; failed: number; processing: number; total_approved_by_currency: Record<string,string>; recent_runs: Run[]};
-type Health = {status: string; version: string; openrouter_configured: boolean; openrouter_enabled: boolean; model: string; ocr_available: boolean};
+type Health = {status: string; version: string; openrouter_configured: boolean; openrouter_enabled: boolean; model: string; ocr_available: boolean; storage_mode: 'postgres'|'local'; hosted: boolean};
 type Procurement = {vendors: Vendor[]; purchase_orders: PO[]; policy: Policy};
 type Scenario = {id: string; title: string; description: string};
 type Page = 'overview' | 'history' | 'procurement' | 'settings';
@@ -138,7 +138,9 @@ function SettingsView({health,dashboard,samples}:{health:Health|null;dashboard:D
    <div className="settings-row"><span>OCR</span><strong>{!health?'—':health.ocr_available?'Available':'Unavailable'}</strong></div>
    <div className="settings-row"><span>Structured files</span><strong>Local processing</strong></div>
    <div className="settings-row"><span>Document processing</span><strong>{!health?'—':aiReady?'Sent to OpenRouter':'On this device'}</strong></div>
+   <div className="settings-row"><span>Upload storage</span><strong>{!health?'—':health.storage_mode==='postgres'?'External database':'Local files'}</strong></div>
    {health?.openrouter_enabled&&!health.openrouter_configured&&<div className="alert warning"><AlertTriangle size={17}/>OpenRouter credentials are missing.</div>}
+   {health?.hosted&&health.storage_mode==='local'&&<div className="alert warning"><AlertTriangle size={17}/>Uploads on this host can disappear after a redeploy or restart. Configure DATABASE_URL for durable storage.</div>}
   </section>
   <section className="panel settings-card">
    <div className="settings-heading"><span className="settings-icon"><ShieldCheck size={23}/></span><h2>Approved value</h2></div>

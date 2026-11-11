@@ -1,10 +1,18 @@
-"""SQLite persistence. Financial commitments derive exclusively from approved runs."""
+"""SQLite locally or PostgreSQL on hosted deployments.
+
+Financial commitments derive exclusively from approved runs. Hosted source
+bytes share the PostgreSQL database so deploys cannot separate records from
+their documents.
+"""
 import json
+import os
 import sqlite3
+import tempfile
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
+from uuid import UUID
 
 
 def now():
@@ -24,12 +32,54 @@ SEED_POS = [
 ]
 
 
+class _PostgresConnection:
+    """Keep the small existing SQL surface shared with sqlite3."""
+
+    def __init__(self, raw):
+        self.raw = raw
+
+    @staticmethod
+    def query(sql):
+        return sql.replace('?', '%s')
+
+    def execute(self, sql, params=()):
+        return self.raw.execute(self.query(sql), params)
+
+    def executemany(self, sql, params):
+        with self.raw.cursor() as cursor:
+            cursor.executemany(self.query(sql), params)
+
+    def commit(self):
+        self.raw.commit()
+
+    def rollback(self):
+        self.raw.rollback()
+
+    def close(self):
+        self.raw.close()
+
+
 class Store:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, *, database_url: str = ''):
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
-        with self.connection() as conn:
-            conn.executescript('''
+        self.database_url = database_url
+        self.remote = bool(database_url)
+        with self.connection(write=self.remote) as conn:
+            if self.remote:
+                for statement in (
+                    'CREATE TABLE IF NOT EXISTS runs (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS vendors (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS purchase_orders (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS settings (id TEXT PRIMARY KEY, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS po_uploads (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS procurement_audit (id BIGSERIAL PRIMARY KEY, at TEXT NOT NULL, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS invoice_deletions (id TEXT PRIMARY KEY, at TEXT NOT NULL, data TEXT NOT NULL)',
+                    'CREATE TABLE IF NOT EXISTS document_sources (kind TEXT NOT NULL, id TEXT NOT NULL, content BYTEA NOT NULL, PRIMARY KEY(kind,id))',
+                ):
+                    conn.execute(statement)
+            else:
+                conn.executescript('''
             PRAGMA journal_mode=WAL;
             CREATE TABLE IF NOT EXISTS runs (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, data TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS vendors (id TEXT PRIMARY KEY, data TEXT NOT NULL);
@@ -41,12 +91,12 @@ class Store:
             ''')
             if not conn.execute("SELECT 1 FROM settings WHERE id='initialized'").fetchone():
                 for item in SEED_VENDORS:
-                    conn.execute('INSERT OR IGNORE INTO vendors VALUES (?,?)', (item['id'], json.dumps(item)))
+                    self._seed_insert(conn, 'vendors', item['id'], json.dumps(item))
                 for item in SEED_POS:
                     from .po_registry import fixture_po
                     item = fixture_po(item, next(v['name'] for v in SEED_VENDORS if v['id'] == item['vendor_id']))
-                    conn.execute('INSERT OR IGNORE INTO purchase_orders VALUES (?,?)', (item['po_number'], json.dumps(item)))
-                conn.execute('INSERT OR IGNORE INTO settings VALUES (?,?)', ('policy', json.dumps(DEFAULT_POLICY)))
+                    self._seed_insert(conn, 'purchase_orders', item['po_number'], json.dumps(item))
+                self._seed_insert(conn, 'settings', 'policy', json.dumps(DEFAULT_POLICY))
                 conn.execute('INSERT INTO settings VALUES (?,?)', ('initialized', 'true'))
             # Move an existing database off the previous default once. Keep
             # other chosen thresholds and allow later policy edits to persist.
@@ -59,12 +109,24 @@ class Store:
                         conn.execute("UPDATE settings SET data=? WHERE id='policy'", (json.dumps(policy),))
                 conn.execute('INSERT INTO settings VALUES (?,?)', ('confidence_threshold_075_migrated', 'true'))
 
+    def _seed_insert(self, conn, table, key, data):
+        if self.remote:
+            conn.execute(f'INSERT INTO {table} VALUES (?,?) ON CONFLICT(id) DO NOTHING', (key, data))
+        else:
+            conn.execute(f'INSERT OR IGNORE INTO {table} VALUES (?,?)', (key, data))
+
     @contextmanager
     def connection(self, write=False):
-        conn = sqlite3.connect(self.path, timeout=30)
+        if self.remote:
+            import psycopg
+            conn = _PostgresConnection(psycopg.connect(self.database_url, connect_timeout=15))
+        else:
+            conn = sqlite3.connect(self.path, timeout=30)
         try:
             if write:
-                conn.execute('BEGIN IMMEDIATE')
+                # A single transaction lock serializes PO capacity and vendor
+                # decisions across overlapping Render deploy instances.
+                conn.execute('SELECT pg_advisory_xact_lock(54685321)' if self.remote else 'BEGIN IMMEDIATE')
             yield conn
             conn.commit()
         except Exception:
@@ -72,6 +134,64 @@ class Store:
             raise
         finally:
             conn.close()
+
+    def _source_path(self, kind, source_id):
+        if kind not in ('sources', 'po-sources'):
+            raise ValueError('Unknown source kind.')
+        try:
+            identifier = str(UUID(str(source_id)))
+        except (ValueError, TypeError, AttributeError) as exc:
+            raise ValueError('Invalid source identifier.') from exc
+        return self.path.parent / kind / f'{identifier}.bin'
+
+    def save_source(self, kind, source_id, content):
+        path = self._source_path(kind, source_id)
+        if self.remote:
+            with self.connection(write=True) as conn:
+                conn.execute('INSERT INTO document_sources (kind,id,content) VALUES (?,?,?) '
+                             'ON CONFLICT(kind,id) DO UPDATE SET content=excluded.content', (kind, str(source_id), content))
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+        path.chmod(0o600)
+
+    def has_source(self, kind, source_id):
+        try:
+            path = self._source_path(kind, source_id)
+        except ValueError:
+            return False
+        if not self.remote:
+            return path.is_file()
+        with self.connection() as conn:
+            return bool(conn.execute('SELECT 1 FROM document_sources WHERE kind=? AND id=?', (kind, str(source_id))).fetchone())
+
+    def source_path(self, kind, source_id):
+        try:
+            path = self._source_path(kind, source_id)
+        except ValueError:
+            return None
+        if not self.remote:
+            return path if path.is_file() else None
+        with self.connection() as conn:
+            row = conn.execute('SELECT content FROM document_sources WHERE kind=? AND id=?', (kind, str(source_id))).fetchone()
+        if not row:
+            return None
+        path.parent.mkdir(parents=True, exist_ok=True)
+        # Materialize only for existing preview and FileResponse consumers.
+        # The durable copy remains in PostgreSQL and survives a new instance.
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=f'{source_id}.', suffix='.tmp', delete=False) as output:
+            temporary = Path(output.name)
+            output.write(bytes(row[0]))
+        try:
+            temporary.chmod(0o600)
+            os.replace(temporary, path)
+        finally:
+            temporary.unlink(missing_ok=True)
+        return path
+
+    def delete_sources(self, kind, source_ids, conn):
+        if self.remote:
+            conn.executemany('DELETE FROM document_sources WHERE kind=? AND id=?', [(kind, key) for key in source_ids])
 
     def save_run(self, run, conn=None):
         run['updated_at'] = now()

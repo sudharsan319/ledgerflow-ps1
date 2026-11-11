@@ -2,7 +2,7 @@
 
 A runnable invoice-processing application for the ASA PS-1 case study. It accepts real documents, extracts invoice fields, checks procurement rules, and records an explainable **approved**, **needs review**, or **rejected** decision. Approval reserves PO capacity; it never executes payment.
 
-The React interface includes a dashboard, live run stages, searchable history, extraction evidence, human review/correction, multi-format PO uploads, independent vendor review, policy settings, and downloadable decision reports. The backend is Python/FastAPI with SQLite and a bounded worker queue. Run it locally or use the included Render deployment configuration with a shared reviewer login by default and an optional public demo mode.
+The React interface includes a dashboard, live run stages, searchable history, extraction evidence, human review/correction, multi-format PO uploads, independent vendor review, policy settings, and downloadable decision reports. The backend is Python/FastAPI with SQLite locally, optional PostgreSQL for hosted persistence, and a bounded worker queue. Run it locally or use the included Render deployment configuration with a shared reviewer login by default and an optional public demo mode.
 
 Submission materials: [checklist and coverage](SUBMISSION.md), [five-minute narration](docs/demo-narration.md), and [demo preparation](docs/demo.md). For a fresh recording workspace, run `./scripts/start-demo.sh` and open `http://127.0.0.1:8001`. Your regular database is preserved.
 
@@ -46,7 +46,7 @@ The included `render.yaml` defines one Docker web service on Render's Free plan.
 
 Hosted access requires the username `reviewer` and a generated secret password by default; only `/healthz` is public. To allow a demonstration without a password, set `LEDGERFLOW_PUBLIC_DEMO=true` in the Render service's Environment settings, save, then rebuild and deploy the latest GitHub commit. Existing username/password settings may remain; they are ignored while this flag is true. Set it to `false` to restore the login, with `LEDGERFLOW_AUTH_PASSWORD` set to at least 20 characters. Share those credentials privately when using protected access.
 
-Public demo mode shares one workspace: anyone with access to the app can view uploaded documents, edit invoice/procurement records and delete invoice uploads. Use fictional samples and keep `ENABLE_OPENROUTER=false` for a public demonstration. If AI extraction is enabled, visitors' requests use the owner's configured OpenRouter key. Free-plan storage is temporary: uploaded files and run history can reset after a restart, redeployment or idle shutdown. The service may also need time to wake before a demonstration.
+Public demo mode shares one workspace: anyone with access to the app can view uploaded documents, edit invoice/procurement records and delete invoice uploads. Use fictional samples and keep `ENABLE_OPENROUTER=false` for a public demonstration. If AI extraction is enabled, visitors' requests use the owner's configured OpenRouter key. On Render Free, set `DATABASE_URL` to an external PostgreSQL database to preserve records and original documents across restarts and redeploys. Without it, local storage is temporary. The service may also need time to wake before a demonstration.
 
 ## Optional OpenRouter extraction
 

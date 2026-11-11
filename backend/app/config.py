@@ -21,6 +21,7 @@ class Settings:
     public_demo: bool = False
     auth_username: str = 'reviewer'
     auth_password: str = field(default='', repr=False)
+    database_url: str = field(default='', repr=False)
 
     def __post_init__(self):
         if self.public_origin:
@@ -32,6 +33,8 @@ class Settings:
                 raise ValueError('Hosted access requires LEDGERFLOW_AUTH_PASSWORD with at least 20 characters.')
         if not self.public_demo and self.auth_password and (not self.auth_username or ':' in self.auth_username or not self.auth_username.isascii()):
             raise ValueError('LEDGERFLOW_AUTH_USERNAME must be nonempty ASCII text without a colon.')
+        if self.database_url and urlsplit(self.database_url).scheme not in ('postgres', 'postgresql'):
+            raise ValueError('DATABASE_URL must be a PostgreSQL connection URL.')
 
     @classmethod
     def from_env(cls):
@@ -49,6 +52,7 @@ class Settings:
             public_demo=os.getenv('LEDGERFLOW_PUBLIC_DEMO', 'false').strip().lower() == 'true',
             auth_username=os.getenv('LEDGERFLOW_AUTH_USERNAME', 'reviewer'),
             auth_password=os.getenv('LEDGERFLOW_AUTH_PASSWORD', ''),
+            database_url=os.getenv('DATABASE_URL', ''),
         )
 
     def extraction_settings(self):

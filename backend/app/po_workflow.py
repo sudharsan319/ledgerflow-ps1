@@ -145,9 +145,7 @@ class POWorkflow:
         upload = {'id': str(uuid.uuid4()), 'filename': filename, 'status': 'queued', 'created_at': stamp,
                   'updated_at': stamp, 'revision': 0, 'items': [], 'events': [], 'error': None,
                   'confirmation': None, 'review_history': [], 'source_sha256': hashlib.sha256(content).hexdigest()}
-        path = self.directory / f'{upload["id"]}.bin'
-        path.write_bytes(content)
-        path.chmod(0o600)
+        self.store.save_source('po-sources', upload['id'], content)
         return upload
 
     def submit(self, inputs):
@@ -268,8 +266,8 @@ class POWorkflow:
         @router.get('/uploads/{upload_id}/source')
         def source(upload_id: str):
             draft = self.get(upload_id)
-            path = self.directory / f'{draft["id"]}.bin'
-            if not path.is_file():
+            path = self.store.source_path('po-sources', draft['id'])
+            if path is None:
                 raise HTTPException(404, 'Source is unavailable.')
             return FileResponse(path, media_type='application/octet-stream', filename=draft['filename'])
 

@@ -104,7 +104,7 @@ def filename_safe(name):
 
 def create_app(settings: Settings | None = None):
     config = settings or Settings.from_env()
-    store = Store(config.data_dir / 'ledgerflow.sqlite3')
+    store = Store(config.data_dir / 'ledgerflow.sqlite3', database_url=config.database_url)
     pipeline = Pipeline(store, config)
     po_workflow = POWorkflow(store, config)
 
@@ -166,7 +166,8 @@ def create_app(settings: Settings | None = None):
     def health():
         return {'status': 'ok', 'version': '1.0.0', 'openrouter_configured': bool(config.openrouter_api_key),
                 'openrouter_enabled': config.enable_openrouter, 'model': config.openrouter_model,
-                'ocr_available': bool(shutil.which('tesseract'))}
+                'ocr_available': bool(shutil.which('tesseract')),
+                'storage_mode': 'postgres' if store.remote else 'local', 'hosted': bool(config.public_origin)}
 
     @app.api_route('/healthz', methods=['GET', 'HEAD'], include_in_schema=False)
     def readiness():
@@ -305,11 +306,11 @@ def create_app(settings: Settings | None = None):
     @app.get('/api/runs/{run_id}/source')
     def source(run_id: str):
         run = require_run(run_id)
-        path = config.data_dir / 'sources' / f'{run["id"]}.bin'
-        while not path.is_file() and run.get('parent_id'):
+        path = store.source_path('sources', run['id'])
+        while path is None and run.get('parent_id'):
             run = require_run(run['parent_id'])
-            path = config.data_dir / 'sources' / f'{run["id"]}.bin'
-        if not path.is_file():
+            path = store.source_path('sources', run['id'])
+        if path is None:
             raise HTTPException(404, 'Original source is unavailable for this run.')
         return FileResponse(path, media_type='application/octet-stream', filename=run['filename'])
 
